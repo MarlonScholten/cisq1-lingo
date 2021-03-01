@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.domain;
 
+import nl.hu.cisq1.lingo.exceptions.InvalidFeedbackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,5 +43,13 @@ class FeedbackTest {
 		Feedback feedback = new Feedback("woord", marks);
 
 		assertTrue(feedback.attemptIsValid());
+	}
+
+	@Test
+	@DisplayName("the feedback is invalid")
+	void feedbackIsInvalid(){
+		assertThrows(
+				InvalidFeedbackException.class,
+				() -> Feedback.correct("woord", List.of(Mark.CORRECT)));
 	}
 }
