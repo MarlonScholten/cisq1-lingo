@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Utils {
+
+	// Return an ArrayList filled with Characters based on the String input
 	public static List<Character> characterListOf(String input){
 		ArrayList<Character> charList = new ArrayList<>();
 
