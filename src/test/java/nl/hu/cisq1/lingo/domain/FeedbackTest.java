@@ -62,6 +62,34 @@ class FeedbackTest {
 				() -> Feedback.correct("woord", List.of(Mark.CORRECT), round));
 	}
 
+	// Marking an attempt parameters
+	static Stream<Arguments> provideAttemptExamples() {
+		return Stream.of(
+				Arguments.of(
+						"kabel",
+						"kegel",
+						List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT)
+				),
+				Arguments.of(
+						"dieven",
+						"deuren",
+						List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT)
+				),
+				Arguments.of(
+						"scholen",
+						"smelten",
+						List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.CORRECT, Mark.CORRECT)
+				)
+		);
+	}
+
+	@ParameterizedTest
+	@DisplayName("mark an attempt")
+	@MethodSource("provideAttemptExamples")
+	void markAnAttempt(String attempt, String wordToGuess, List<Mark> expectedMarks){
+		assertEquals(Feedback.markAttempt(attempt,wordToGuess), expectedMarks);
+	}
+
 //	// Giving a hint parameters
 //	static Stream<Arguments> provideHintExamples() {
 //		return Stream.of(
@@ -74,8 +102,8 @@ class FeedbackTest {
 //	}
 //
 //	@ParameterizedTest
-//	@MethodSource("provideHintExamples")
 //	@DisplayName("give a hint")
+//	@MethodSource("provideHintExamples")
 //	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
 //		Round round = Round.newRound(wordToGuess);
 //

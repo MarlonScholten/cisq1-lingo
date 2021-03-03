@@ -37,25 +37,27 @@ public class Feedback {
 	}
 
 	public static List<Mark> markAttempt(String attempt, String wordToGuess){
+		// Set up the List as INVALID, so we can either replace the values by index
+		// or return it if the lengths are not equal
 		List<Mark> markedAttempt = new ArrayList<>();
-		List<Character> attemptChars = Utils.characterListOf(attempt);
-		List<Character> wordChars = Utils.characterListOf(wordToGuess);
+		for(int m=0;m<attempt.length();m++){
+			markedAttempt.add(Mark.INVALID);
+		}
 
-		for(int i=0;i<wordChars.size();i++){
-			if( !(attempt.length() == wordToGuess.length()) ){
-				for(char c: attempt.toCharArray()) {
-					markedAttempt.add(Mark.INVALID);
+		if( (attempt.length() == wordToGuess.length()) ){
+			List<Character> attemptChars = Utils.characterListOf(attempt);
+			List<Character> wordChars = Utils.characterListOf(wordToGuess);
+
+			for(int i=0;i<wordChars.size();i++){
+				if( wordChars.contains(attemptChars.get(i)) ){
+					markedAttempt.set(i, Mark.PRESENT);
 				}
-				return markedAttempt;
-			}
-			if( wordChars.contains(attemptChars.get(i)) ){
-				markedAttempt.set(i, Mark.PRESENT);
-			}
-			if( !wordChars.contains(attemptChars.get(i)) ){
-				markedAttempt.set(i, Mark.ABSENT);
-			}
-			if( attemptChars.get(i).equals(wordChars.get(i)) ){
-				markedAttempt.set(i, Mark.CORRECT);
+				if( !wordChars.contains(attemptChars.get(i)) ){
+					markedAttempt.set(i, Mark.ABSENT);
+				}
+				if( attemptChars.get(i).equals(wordChars.get(i)) ){
+					markedAttempt.set(i, Mark.CORRECT);
+				}
 			}
 		}
 		return markedAttempt;
