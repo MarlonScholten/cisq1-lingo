@@ -36,6 +36,11 @@ public class Feedback {
 		return this.marks.stream().noneMatch(str -> str.equals(Mark.INVALID));
 	}
 
+	// Remove multiple PRESENT Marks and replace them with
+//	private List<Mark> removeMultiPresent(List<Mark> marks){
+//
+//	}
+
 	public static List<Mark> markAttempt(String attempt, String wordToGuess){
 		// Set up the List as INVALID, so we can either replace the values by index
 		// or return it if the lengths are not equal
