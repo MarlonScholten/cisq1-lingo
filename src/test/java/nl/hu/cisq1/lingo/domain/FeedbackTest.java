@@ -66,18 +66,18 @@ class FeedbackTest {
 	static Stream<Arguments> provideAttemptExamples() {
 		return Stream.of(
 				Arguments.of(
-						"kabel",
-						"kegel",
+						"kabel", // attempt
+						"kegel", // wordToGuess
 						List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT)
 				),
 				Arguments.of(
-						"dieven",
-						"deuren",
+						"dieven", // attempt
+						"deuren", // wordToGuess
 						List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT)
 				),
 				Arguments.of(
-						"scholen",
-						"smelten",
+						"scholen", // attempt
+						"smelten", // wordToGuess
 						List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.CORRECT, Mark.CORRECT)
 				)
 		);
