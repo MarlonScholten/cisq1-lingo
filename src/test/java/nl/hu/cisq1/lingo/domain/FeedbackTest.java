@@ -79,7 +79,17 @@ class FeedbackTest {
 						"scholen", // attempt
 						"smelten", // wordToGuess
 						List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.CORRECT, Mark.CORRECT)
-				)
+				),
+				Arguments.of("aaaaa","woord",List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT)),
+				Arguments.of("waare","woord",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT)),
+				Arguments.of( "a","woord",List.of(Mark.INVALID)),
+				Arguments.of("waboo","woord",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.PRESENT,Mark.PRESENT)),
+				Arguments.of("waood","woord",List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT)),
+				Arguments.of("woood","woord",List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.CORRECT)),
+				Arguments.of("babab","ababa",List.of(Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.ABSENT)),
+				Arguments.of("draad","baard",List.of(Mark.ABSENT,Mark.PRESENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT)),
+				Arguments.of("bbaa","aabb",List.of(Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.PRESENT)),
+				Arguments.of("woord","woord",List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT))
 		);
 	}
 
@@ -87,7 +97,7 @@ class FeedbackTest {
 	@DisplayName("mark an attempt")
 	@MethodSource("provideAttemptExamples")
 	void markAnAttempt(String attempt, String wordToGuess, List<Mark> expectedMarks){
-		assertEquals(Feedback.markAttempt(attempt,wordToGuess), expectedMarks);
+		assertEquals(expectedMarks,Feedback.markAttempt(attempt,wordToGuess));
 	}
 
 //	// Giving a hint parameters
