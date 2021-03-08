@@ -62,6 +62,13 @@ class FeedbackTest {
 				() -> Feedback.correct("woord", List.of(Mark.CORRECT), round));
 	}
 
+	@ParameterizedTest
+	@DisplayName("mark an attempt")
+	@MethodSource("provideAttemptExamples")
+	void markAnAttempt(String attempt, String wordToGuess, List<Mark> expectedMarks){
+		assertEquals(expectedMarks,Feedback.markAttempt(attempt,wordToGuess));
+	}
+
 	// Marking an attempt parameters
 	static Stream<Arguments> provideAttemptExamples() {
 		return Stream.of(
@@ -80,26 +87,33 @@ class FeedbackTest {
 						"smelten", // wordToGuess
 						List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.PRESENT, Mark.CORRECT, Mark.CORRECT)
 				),
-				Arguments.of("aaaaa","woord",List.of(Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT,Mark.ABSENT)),
-				Arguments.of("waare","woord",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT)),
-				Arguments.of( "a","woord",List.of(Mark.INVALID)),
-				Arguments.of("waboo","woord",List.of(Mark.CORRECT,Mark.ABSENT,Mark.ABSENT,Mark.PRESENT,Mark.PRESENT)),
-				Arguments.of("waood","woord",List.of(Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT)),
-				Arguments.of("woood","woord",List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.CORRECT)),
-				Arguments.of("babab","ababa",List.of(Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.ABSENT)),
-				Arguments.of("draad","baard",List.of(Mark.ABSENT,Mark.PRESENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT)),
-				Arguments.of("bbaa","aabb",List.of(Mark.PRESENT,Mark.PRESENT,Mark.PRESENT,Mark.PRESENT)),
-				Arguments.of("woord","woord",List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT))
+				Arguments.of(
+						"draad",  // attempt
+						"baard",  // wordToGuess
+						List.of(Mark.ABSENT,Mark.PRESENT,Mark.CORRECT,Mark.PRESENT,Mark.CORRECT)
+				),
+				Arguments.of(
+						"woord",  // attempt
+						"woord",  // wordToGuess
+						List.of(Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT,Mark.CORRECT)
+				),
+				Arguments.of(
+						"dwerg",  // attempt
+						"dwars",  // wordToGuess
+						List.of(Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT)
+				)
 		);
 	}
 
-	@ParameterizedTest
-	@DisplayName("mark an attempt")
-	@MethodSource("provideAttemptExamples")
-	void markAnAttempt(String attempt, String wordToGuess, List<Mark> expectedMarks){
-		assertEquals(expectedMarks,Feedback.markAttempt(attempt,wordToGuess));
-	}
-
+//	@ParameterizedTest
+//	@DisplayName("give a hint")
+//	@MethodSource("provideHintExamples")
+//	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
+//		Round round = Round.newRound(wordToGuess);
+//
+//		assertEquals(expected, round.);
+//	}
+//
 //	// Giving a hint parameters
 //	static Stream<Arguments> provideHintExamples() {
 //		return Stream.of(
@@ -109,14 +123,5 @@ class FeedbackTest {
 //						"kegel",
 //						Utils.characterListOf("k..el"))
 //		);
-//	}
-//
-//	@ParameterizedTest
-//	@DisplayName("give a hint")
-//	@MethodSource("provideHintExamples")
-//	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
-//		Round round = Round.newRound(wordToGuess);
-//
-//		assertEquals(,expected);
 //	}
 }
