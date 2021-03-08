@@ -9,6 +9,7 @@ import nl.hu.cisq1.lingo.exceptions.InvalidFeedbackException;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,10 +22,9 @@ public class Feedback {
 	private List<Mark> marks;
 	private Round round;
 
-	public static Feedback correct(@NotEmpty @NotBlank String attempt, List<Mark> marks, Round round) {
-		if(attempt.length() != marks.size()){
-			throw new InvalidFeedbackException();
-		}
+	public static Feedback correct(@NotEmpty @NotBlank String attempt, Round round) {
+		List<Mark> marks = Feedback.markAttempt(attempt, round.getWordToGuess());
+
 		return new Feedback(attempt,marks,round);
 	}
 
@@ -48,6 +48,7 @@ public class Feedback {
 		if( (attempt.length() == wordToGuess.length()) ){
 			List<Character> attemptChars = Utils.characterListOf(attempt);
 			List<Character> wordChars = Utils.characterListOf(wordToGuess);
+			// Contains the characters that were not guessed correctly
 			List<Character> absentChars = new ArrayList<>();
 
 			for(int i=0;i<wordChars.size();i++){
@@ -58,7 +59,7 @@ public class Feedback {
 					markedAttempt.set(i, Mark.ABSENT);
 				}
 			}
-			// Mark the right characters as present
+			// Mark the right characters as present, if any
 			for(int i=0;i<wordChars.size();i++){
 				if( absentChars.contains(attemptChars.get(i)) && markedAttempt.get(i)==Mark.ABSENT ){
 					absentChars.remove(absentChars.indexOf(attemptChars.get(i)));
@@ -69,12 +70,22 @@ public class Feedback {
 		return markedAttempt;
 	}
 
-//	// Previous hint + wordToGuess + marks = new hint
-//	public List<Character> giveHint(List<Character> previousHint, String wordToGuess){
-//		for(int i=0;i<this.marks.size();i++){
-//
-//		}
-//		List<Character> newHint = Utils.characterListOf("input");
-//		return newHint;
-//	}
+	// Previous hint + wordToGuess + marks = new hint
+	public List<Character> giveHint(List<Character> previousHint, String wordToGuess){
+		List<Character> newHint = new ArrayList<>();
+		// Fill the new hint with dots, to prep for the copy
+		for(int i=0;i<wordToGuess.length();i++){
+			newHint.add('.');
+		}
+		// Copy the hint information that we already have
+		Collections.copy(newHint,previousHint);
+
+		// Add all the correct characters to the hint
+		for(int i=0;i<this.marks.size();i++){
+			if(this.marks.get(i).equals(Mark.CORRECT)){
+				newHint.set(i, wordToGuess.charAt(i));
+			}
+		}
+		return newHint;
+	}
 }

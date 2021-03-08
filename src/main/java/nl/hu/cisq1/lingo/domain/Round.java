@@ -2,8 +2,8 @@ package nl.hu.cisq1.lingo.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
-import nl.hu.cisq1.lingo.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,11 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Round {
+	@Getter
 	private String wordToGuess;
 	private int amountOfAttempts;
 	private boolean wordWasGuessed;
+	@Getter
 	private List<Character> currentHint;
 	private List<Feedback> givenFeedback;
 

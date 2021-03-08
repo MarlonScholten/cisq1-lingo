@@ -53,15 +53,6 @@ class FeedbackTest {
 		assertTrue(feedback.attemptIsValid());
 	}
 
-	@Test
-	@DisplayName("the feedback is invalid")
-	void feedbackIsInvalid(){
-		Round round = Round.newRound("woord");
-		assertThrows(
-				InvalidFeedbackException.class,
-				() -> Feedback.correct("woord", List.of(Mark.CORRECT), round));
-	}
-
 	@ParameterizedTest
 	@DisplayName("mark an attempt")
 	@MethodSource("provideAttemptExamples")
@@ -101,27 +92,50 @@ class FeedbackTest {
 						"dwerg",  // attempt
 						"dwars",  // wordToGuess
 						List.of(Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.CORRECT,Mark.ABSENT)
+				),
+				Arguments.of(
+						"aaa",  // attempt
+						"hoort",  // wordToGuess
+						List.of(Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID)
+				),
+				Arguments.of(
+						"oooo",  // attempt
+						"woord",  // wordToGuess
+						List.of(Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID)
+				),
+				Arguments.of(
+						"ooooo",  // attempt
+						"woord",  // wordToGuess
+						List.of(Mark.ABSENT,Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT)
 				)
 		);
 	}
 
-//	@ParameterizedTest
-//	@DisplayName("give a hint")
-//	@MethodSource("provideHintExamples")
-//	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
-//		Round round = Round.newRound(wordToGuess);
-//
-//		assertEquals(expected, round.);
-//	}
-//
-//	// Giving a hint parameters
-//	static Stream<Arguments> provideHintExamples() {
-//		return Stream.of(
-//				Arguments.of(
-//						Utils.characterListOf("k...."),
-//						"kabel",
-//						"kegel",
-//						Utils.characterListOf("k..el"))
-//		);
-//	}
+	@ParameterizedTest
+	@DisplayName("give a hint")
+	@MethodSource("provideHintExamples")
+	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
+		Round round = Round.newRound(wordToGuess);
+		Feedback feedback = Feedback.correct(attempt,round);
+
+		assertEquals(expected, feedback.giveHint(previousHint, wordToGuess));
+	}
+
+	// Giving a hint parameters
+	static Stream<Arguments> provideHintExamples() {
+		return Stream.of(
+				Arguments.of(
+						Utils.characterListOf("k...."),
+						"kabel",
+						"kegel",
+						Utils.characterListOf("k..el")
+				),
+				Arguments.of(
+						Utils.characterListOf("dw..."),
+						"dwerg",
+						"dwars",
+						Utils.characterListOf("dw.r.")
+				)
+		);
+	}
 }
