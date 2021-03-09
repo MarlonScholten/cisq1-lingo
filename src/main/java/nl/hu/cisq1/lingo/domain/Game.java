@@ -13,16 +13,17 @@ public class Game {
 	private int id;
 	private List<Round> rounds;
 	private Score score;
+//	private GameState state;
 
-	public void startGame(){
-
-	}
-
-	public void nextRound(){
-
-	}
-
-	public void endGame(){
-
-	}
+//	public void startGame(){
+//
+//	}
+//
+//	public void nextRound(){
+//
+//	}
+//
+//	public void endGame(){
+//
+//	}
 }
