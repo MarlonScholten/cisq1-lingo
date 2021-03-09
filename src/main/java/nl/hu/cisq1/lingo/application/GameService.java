@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.application;
 
-import nl.hu.cisq1.lingo.data.SpringGameRepository;
+import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import org.springframework.stereotype.Service;
 
 @Service

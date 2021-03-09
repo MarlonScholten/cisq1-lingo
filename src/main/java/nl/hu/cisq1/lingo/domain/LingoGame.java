@@ -7,36 +7,14 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@Entity
-public class Game {
-	private long id;
+public class LingoGame implements Serializable {
 	private List<Round> rounds;
-	private Score score;
 
-//	public void startGame(){
-//
-//	}
-//
-//	public void nextRound(){
-//
-//	}
-//
-//	public void endGame(){
-//
-//	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Id
-	public Long getId() {
-		return id;
-	}
 }

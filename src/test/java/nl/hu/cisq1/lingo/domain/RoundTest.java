@@ -19,7 +19,7 @@ class RoundTest {
 	@DisplayName("construct a new Round")
 	void constructNewRound(){
 		Round actual = Round.newRound("woord");
-		Round expected = new Round("woord", 0, false, Utils.characterListOf("w...."), new ArrayList<>());
+		Round expected = new Round("woord", 0, false, Utils.characterListOf("w...."), new ArrayList<>(), State.PLAYING);
 
 		assertEquals(expected,actual);
 	}
