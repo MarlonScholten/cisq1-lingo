@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.domain;
 
 import nl.hu.cisq1.lingo.Utils;
+import nl.hu.cisq1.lingo.domain.exceptions.IllegalMoveException;
 import nl.hu.cisq1.lingo.domain.exceptions.IllegalWordException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,5 +64,59 @@ class RoundTest {
 						Utils.characterListOf("g......")
 				)
 		);
+	}
+
+	@Test
+	@DisplayName("Try an attempt while the round is over")
+	void illegalMoveTest(){
+		Round round = Round.newRound("woord");
+		// The game has ended with this guess
+		round.doAttempt("woord");
+		// So this should throw an exception
+		assertThrows(
+				IllegalMoveException.class,
+				() -> round.doAttempt("woord")
+		);
+	}
+
+	@Test
+	@DisplayName("Do an attempt and win the game")
+	void doAnAttemptAndWin(){
+		Round round = Round.newRound("woord");
+		round.doAttempt("woord");
+		assertEquals(State.WON, round.getState());
+	}
+
+	@Test
+	@DisplayName("Do some attempts and lose the game")
+	void doSomeAttemptsAndLose(){
+		Round round = Round.newRound("woord");
+		round.doAttempt("hoort");
+		round.doAttempt("moord");
+		round.doAttempt("vaart");
+		round.doAttempt("baard");
+		round.doAttempt("haard");
+		assertEquals(State.LOST, round.getState());
+	}
+
+	@Test
+	@DisplayName("Do some attempts and win the game on the fifth try")
+	void doSomeAttemptsAndWinOnFifthTry(){
+		Round round = Round.newRound("woord");
+		round.doAttempt("hoort");
+		round.doAttempt("moord");
+		round.doAttempt("vaart");
+		round.doAttempt("baard");
+		round.doAttempt("woord");
+		assertEquals(State.WON, round.getState());
+	}
+
+	@Test
+	@DisplayName("Do an attempt and check if we are still playing")
+	void checkForStillPlayingAfterAttempt(){
+		Round round = Round.newRound("woord");
+		round.doAttempt("hoort");
+		round.doAttempt("moord");
+		assertEquals(State.PLAYING, round.getState());
 	}
 }

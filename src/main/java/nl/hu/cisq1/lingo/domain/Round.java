@@ -22,6 +22,7 @@ public class Round implements Serializable {
 	@Getter
 	private List<Character> currentHint;
 	private List<Feedback> givenFeedback;
+	@Getter
 	private State state;
 
 	public static Round newRound(String wordToGuess){
@@ -40,23 +41,20 @@ public class Round implements Serializable {
 		return initialHint;
 	}
 
-//	//TODO: tests schrijven (voor nu uit gecomment zodat Jacoco passed)
-//	public void doAttempt(String attempt){
-//		if(state.equals(State.PLAYING)){
-//			Feedback feedback = Feedback.newFeedback(attempt,this);
-//			givenFeedback.add(feedback);
-//			currentHint = feedback.giveHint(currentHint,wordToGuess);
-//			this.wordWasGuessed = feedback.isWordGuessed();
-//			updateState();
-//		}
-//		throw new IllegalMoveException("Cannot attempt a guess when not playing");
-//	}
-//
-//	//TODO: tests schrijven (voor nu uit gecomment zodat Jacoco passed)
-//	public void updateState(){
-//		if(wordWasGuessed){
-//			state=State.WON;
-//		}
-//		if(!wordWasGuessed && givenFeedback.size()==maxAttempts) state=State.LOST;
-//	}
+	public void doAttempt(String attempt){
+		if(state.equals(State.PLAYING)){
+			Feedback feedback = Feedback.newFeedback(attempt,this);
+			givenFeedback.add(feedback);
+			currentHint = feedback.giveHint(currentHint,wordToGuess);
+			this.wordWasGuessed = feedback.isWordGuessed();
+			updateState();
+		} else throw new IllegalMoveException("Cannot attempt a guess when not playing");
+	}
+
+	public void updateState(){
+		if(wordWasGuessed){
+			state=State.WON;
+		}
+		if(!wordWasGuessed && givenFeedback.size()==maxAttempts) state=State.LOST;
+	}
 }
