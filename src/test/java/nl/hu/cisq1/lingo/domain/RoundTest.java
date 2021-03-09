@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.domain;
 
 import nl.hu.cisq1.lingo.Utils;
-import nl.hu.cisq1.lingo.exceptions.IllegalWordException;
+import nl.hu.cisq1.lingo.domain.exceptions.IllegalWordException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
