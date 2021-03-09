@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("game")
 public class GameController {
-//	private final GameService service;
-//
-//	public GameController(GameService service) {
-//		this.service = service;
-//	}
-//
+	private final GameService service;
+
+	public GameController(GameService service) {
+		this.service = service;
+	}
+
 //	@PostMapping("/new")
 //	public GameDTO newGame() {
 //		return this.service.newGame();
