@@ -18,7 +18,6 @@ public class Game {
 	private long id;
 	private List<Round> rounds;
 	private Score score;
-//	private GameState state;
 
 //	public void startGame(){
 //
