@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import nl.hu.cisq1.lingo.Utils;
-import nl.hu.cisq1.lingo.exceptions.InvalidFeedbackException;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,13 +13,11 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Feedback {
-	@NotEmpty
-	@NotBlank
 	private String attempt;
 	private List<Mark> marks;
 	private Round round;
 
-	public static Feedback correct(@NotEmpty @NotBlank String attempt, Round round) {
+	public static Feedback newFeedback(String attempt, Round round) {
 		List<Mark> marks = Feedback.markAttempt(attempt, round.getWordToGuess());
 
 		return new Feedback(attempt,marks,round);

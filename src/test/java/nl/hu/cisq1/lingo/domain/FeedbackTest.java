@@ -1,7 +1,6 @@
 package nl.hu.cisq1.lingo.domain;
 
 import nl.hu.cisq1.lingo.Utils;
-import nl.hu.cisq1.lingo.exceptions.InvalidFeedbackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -107,6 +106,11 @@ class FeedbackTest {
 						"ooooo",  // attempt
 						"woord",  // wordToGuess
 						List.of(Mark.ABSENT,Mark.CORRECT,Mark.CORRECT,Mark.ABSENT,Mark.ABSENT)
+				),
+				Arguments.of(
+						"oooooo",  // attempt
+						"woord",  // wordToGuess
+						List.of(Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID,Mark.INVALID)
 				)
 		);
 	}
@@ -116,7 +120,7 @@ class FeedbackTest {
 	@MethodSource("provideHintExamples")
 	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
 		Round round = Round.newRound(wordToGuess);
-		Feedback feedback = Feedback.correct(attempt,round);
+		Feedback feedback = Feedback.newFeedback(attempt,round);
 
 		assertEquals(expected, feedback.giveHint(previousHint, wordToGuess));
 	}
@@ -135,6 +139,18 @@ class FeedbackTest {
 						"dwerg",
 						"dwars",
 						Utils.characterListOf("dw.r.")
+				),
+				Arguments.of(
+						Utils.characterListOf("bo..."),
+						"breken",
+						"boksen",
+						Utils.characterListOf("bo..en")
+				),
+				Arguments.of(
+						Utils.characterListOf("he...n"),
+						"helden",
+						"herten",
+						Utils.characterListOf("he..en")
 				)
 		);
 	}
