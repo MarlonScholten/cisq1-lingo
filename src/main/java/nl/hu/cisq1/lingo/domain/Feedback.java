@@ -44,7 +44,7 @@ public class Feedback implements Serializable {
 		if( (attempt.length() == wordToGuess.length()) ){
 			List<Character> attemptChars = Utils.characterListOf(attempt);
 			List<Character> wordChars = Utils.characterListOf(wordToGuess);
-			// Contains the characters that were not guessed correctly
+			// Contains the characters of the word to guess that were not guessed correctly
 			List<Character> absentChars = new ArrayList<>();
 
 			for(int i=0;i<wordChars.size();i++){
