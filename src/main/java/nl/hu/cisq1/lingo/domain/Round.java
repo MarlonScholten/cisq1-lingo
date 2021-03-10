@@ -19,6 +19,7 @@ public class Round implements Serializable {
 	private String wordToGuess;
 	private final int maxAttempts = 5;
 	private boolean wordWasGuessed;
+	//TODO: save all the given hints instead, so we can show them later
 	@Getter
 	private List<Character> currentHint;
 	private List<Feedback> givenFeedback;
