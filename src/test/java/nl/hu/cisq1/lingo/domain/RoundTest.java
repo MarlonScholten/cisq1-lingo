@@ -20,7 +20,9 @@ class RoundTest {
 	@DisplayName("construct a new Round")
 	void constructNewRound(){
 		Round actual = Round.newRound("woord");
-		Round expected = new Round("woord", false, Utils.characterListOf("w...."), new ArrayList<>(), State.PLAYING);
+		List<Hint> initialHints = new ArrayList<>();
+		initialHints.add(new Hint(Utils.characterListOf("w....")));
+		Round expected = new Round("woord", false, initialHints,new Hint(Utils.characterListOf("w....")), new ArrayList<>(), State.PLAYING);
 
 		assertEquals(expected,actual);
 	}
@@ -44,7 +46,7 @@ class RoundTest {
 	@ParameterizedTest
 	@DisplayName("Generate initial hints")
 	@MethodSource("provideInitialHintExamples")
-	void generateInitialHints(String wordToGuess, List<Character> expectedHint){
+	void generateInitialHints(String wordToGuess, Hint expectedHint){
 		Round round = Round.newRound(wordToGuess);
 		assertEquals(expectedHint, round.getCurrentHint());
 	}
@@ -53,15 +55,15 @@ class RoundTest {
 		return Stream.of(
 				Arguments.of(
 						"woord",
-						Utils.characterListOf("w....")
+						new Hint(Utils.characterListOf("w...."))
 				),
 				Arguments.of(
 						"parken",
-						Utils.characterListOf("p.....")
+						new Hint(Utils.characterListOf("p....."))
 				),
 				Arguments.of(
 						"groente",
-						Utils.characterListOf("g......")
+						new Hint(Utils.characterListOf("g......"))
 				)
 		);
 	}

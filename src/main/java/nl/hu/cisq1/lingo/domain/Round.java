@@ -19,34 +19,30 @@ public class Round implements Serializable {
 	private String wordToGuess;
 	private final int maxAttempts = 5;
 	private boolean wordWasGuessed;
-	//TODO: save all the given hints instead, so we can show them later
 	@Getter
-	private List<Character> currentHint;
+	private List<Hint> givenHints;
+	@Getter
+	private Hint currentHint;
 	private List<Feedback> givenFeedback;
 	@Getter
 	private State state;
 
 	public static Round newRound(String wordToGuess){
 		if( (wordToGuess.trim().length()>0) ){
-			return new Round(wordToGuess, false,initialHintFor(wordToGuess), new ArrayList<>(), State.PLAYING);
+			List<Hint> initialHints = new ArrayList<>();
+			initialHints.add(Hint.initialHintFor(wordToGuess));
+			Round round = new Round(wordToGuess, false, initialHints, null, new ArrayList<>(), State.PLAYING);
+			round.currentHint = round.givenHints.get(round.givenHints.size()-1);
+			return round;
 		}
 		else throw new IllegalWordException("The word to guess cannot be empty or blank");
-	}
-
-	private static List<Character> initialHintFor(String input){
-		List<Character> initialHint = new ArrayList<>();
-		initialHint.add(input.charAt(0));
-		for(int i=1;i<input.length();i++){
-			initialHint.add('.');
-		}
-		return initialHint;
 	}
 
 	public void doAttempt(String attempt){
 		if(state.equals(State.PLAYING)){
 			Feedback feedback = Feedback.newFeedback(attempt,this);
 			givenFeedback.add(feedback);
-			currentHint = feedback.giveHint(currentHint,wordToGuess);
+			currentHint = Hint.giveHint(currentHint,wordToGuess,feedback.getMarks());
 			this.wordWasGuessed = feedback.isWordGuessed();
 			updateState();
 		} else throw new IllegalMoveException("Cannot attempt a guess when not playing");
@@ -57,5 +53,9 @@ public class Round implements Serializable {
 			state=State.WON;
 		}
 		if(!wordWasGuessed && givenFeedback.size()==maxAttempts) state=State.LOST;
+	}
+
+	public Feedback getLastFeedback(){
+		return this.givenFeedback.get(givenFeedback.size()-1);
 	}
 }
