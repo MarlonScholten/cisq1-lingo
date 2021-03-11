@@ -17,7 +17,7 @@ import java.util.List;
 public class Round implements Serializable {
 	@Getter
 	private String wordToGuess;
-	private static final int maxAttempts = 5;
+	private static final int MAX_ATTEMPTS = 5;
 	private boolean wordWasGuessed;
 	@Getter
 	private List<Hint> givenHints;
@@ -52,7 +52,7 @@ public class Round implements Serializable {
 		if(wordWasGuessed){
 			state=State.WON;
 		}
-		if(!wordWasGuessed && givenFeedback.size()==maxAttempts) state=State.LOST;
+		if(!wordWasGuessed && givenFeedback.size()==MAX_ATTEMPTS) state=State.LOST;
 	}
 
 	public Feedback getLastFeedback(){
