@@ -17,7 +17,7 @@ import java.util.List;
 public class Round implements Serializable {
 	@Getter
 	private String wordToGuess;
-	private final int maxAttempts = 5;
+	private static final int maxAttempts = 5;
 	private boolean wordWasGuessed;
 	@Getter
 	private List<Hint> givenHints;
