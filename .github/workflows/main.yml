@@ -28,6 +28,6 @@ jobs:
         run: mvn -B verify -Dspring.profiles.active=ci
       - name: Analyze with SonarCloud
         env:
-          GITHUB_TOKEN:${{secrets.GITHUB_TOKEN}}
-          GITHUB_TOKEN:${{secrets.SONAR_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
