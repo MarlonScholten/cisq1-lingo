@@ -8,7 +8,6 @@ import nl.hu.cisq1.lingo.Utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -60,7 +59,7 @@ public class Feedback implements Serializable {
 			// Mark the right characters as present, if any
 			for(int i=0;i<wordChars.size();i++){
 				if( absentChars.contains(attemptChars.get(i)) && markedAttempt.get(i)==Mark.ABSENT ){
-					absentChars.remove(absentChars.indexOf(attemptChars.get(i)));
+					absentChars.remove(attemptChars.get(i));
 					markedAttempt.set(i, Mark.PRESENT);
 				}
 			}
