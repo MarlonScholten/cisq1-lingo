@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import nl.hu.cisq1.lingo.Utils;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @ToString
 public class Feedback implements Serializable {
 	private String attempt;
+	@Getter
 	private List<Mark> marks;
 	private Round round;
 
@@ -64,24 +66,5 @@ public class Feedback implements Serializable {
 			}
 		}
 		return markedAttempt;
-	}
-
-	// Previous hint + wordToGuess + marks = new hint
-	public List<Character> giveHint(List<Character> previousHint, String wordToGuess){
-		List<Character> newHint = new ArrayList<>();
-		// Fill the new hint with dots, to prep for the copy
-		for(int i=0;i<wordToGuess.length();i++){
-			newHint.add('.');
-		}
-		// Copy the hint information that we already have
-		Collections.copy(newHint,previousHint);
-
-		// Add all the correct characters to the hint
-		for(int i=0;i<this.marks.size();i++){
-			if(this.marks.get(i).equals(Mark.CORRECT)){
-				newHint.set(i, wordToGuess.charAt(i));
-			}
-		}
-		return newHint;
 	}
 }

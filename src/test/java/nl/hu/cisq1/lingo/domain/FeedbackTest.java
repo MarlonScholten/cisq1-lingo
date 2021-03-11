@@ -114,44 +114,4 @@ class FeedbackTest {
 				)
 		);
 	}
-
-	@ParameterizedTest
-	@DisplayName("give a hint")
-	@MethodSource("provideHintExamples")
-	void giveHint(List<Character> previousHint, String wordToGuess, String attempt, List<Character> expected){
-		Round round = Round.newRound(wordToGuess);
-		Feedback feedback = Feedback.newFeedback(attempt,round);
-
-		assertEquals(expected, feedback.giveHint(previousHint, wordToGuess));
-	}
-
-	// Giving a hint parameters
-	static Stream<Arguments> provideHintExamples() {
-		return Stream.of(
-				Arguments.of(
-						Utils.characterListOf("k...."),
-						"kabel",
-						"kegel",
-						Utils.characterListOf("k..el")
-				),
-				Arguments.of(
-						Utils.characterListOf("dw..."),
-						"dwerg",
-						"dwars",
-						Utils.characterListOf("dw.r.")
-				),
-				Arguments.of(
-						Utils.characterListOf("bo..."),
-						"breken",
-						"boksen",
-						Utils.characterListOf("bo..en")
-				),
-				Arguments.of(
-						Utils.characterListOf("he...n"),
-						"helden",
-						"herten",
-						Utils.characterListOf("he..en")
-				)
-		);
-	}
 }
