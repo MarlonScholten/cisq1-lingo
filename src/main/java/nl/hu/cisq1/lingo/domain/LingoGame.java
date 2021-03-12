@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,8 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Entity
 public class LingoGame implements Serializable {
 	private List<Round> rounds;
+	private Long id;
 
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Id
+	public Long getId() {
+		return id;
+	}
 }
