@@ -15,4 +15,5 @@ import java.util.List;
 public class LingoGame implements Serializable {
 	private List<Round> rounds;
 
+
 }

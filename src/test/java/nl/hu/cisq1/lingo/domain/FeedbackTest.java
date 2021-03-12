@@ -44,7 +44,7 @@ class FeedbackTest {
 
 	@Test
 	@DisplayName("the attempt is valid")
-	void attemptIsNotInvalid(){
+	void attemptIsValid(){
 		Round round = Round.newRound("woord");
 		List marks = List.of(Mark.ABSENT, Mark.ABSENT,Mark.PRESENT,Mark.ABSENT,Mark.CORRECT);
 		Feedback feedback = new Feedback("woord", marks, round);
