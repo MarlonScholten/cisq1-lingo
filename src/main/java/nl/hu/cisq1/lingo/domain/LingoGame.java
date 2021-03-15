@@ -12,5 +12,4 @@ public class LingoGame implements Serializable {
 	private List<Round> rounds;
 	private int score;
 
-
 }

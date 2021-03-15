@@ -15,9 +15,9 @@ public class GameController {
 		this.service = service;
 	}
 
-	@PostMapping("/new")
-	public GameDTOStrategy newGame() {
-		return this.service.newGame();
-	}
+//	@PostMapping("/new")
+//	public GameDTOStrategy newGame() {
+//		return this.service.newGame();
+//	}
 
 }
