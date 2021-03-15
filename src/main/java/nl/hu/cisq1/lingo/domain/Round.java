@@ -1,9 +1,6 @@
 package nl.hu.cisq1.lingo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import nl.hu.cisq1.lingo.domain.exceptions.IllegalMoveException;
 import nl.hu.cisq1.lingo.domain.exceptions.IllegalWordException;
 
@@ -11,20 +8,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class Round implements Serializable {
-	@Getter
 	private String wordToGuess;
 	private static final int MAX_ATTEMPTS = 5;
 	private boolean wordWasGuessed;
-	@Getter
 	private List<Hint> givenHints;
-	@Getter
 	private Hint currentHint;
 	private List<Feedback> givenFeedback;
-	@Getter
 	private State state;
 
 	public static Round newRound(String wordToGuess){

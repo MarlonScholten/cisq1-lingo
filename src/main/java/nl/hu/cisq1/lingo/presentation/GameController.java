@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.presentation;
 
 import nl.hu.cisq1.lingo.application.GameService;
+import nl.hu.cisq1.lingo.data.dto.GameDTOStrategy;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +15,9 @@ public class GameController {
 		this.service = service;
 	}
 
-//	@PostMapping("/new")
-//	public GameDTO newGame() {
-//		return this.service.newGame();
-//	}
+	@PostMapping("/new")
+	public GameDTOStrategy newGame() {
+		return this.service.newGame();
+	}
 
 }
