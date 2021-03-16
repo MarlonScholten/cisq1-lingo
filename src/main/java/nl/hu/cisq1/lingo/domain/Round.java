@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class Round implements Serializable {
 	private String wordToGuess;
 	private static final int MAX_ATTEMPTS = 5;
@@ -19,8 +20,6 @@ public class Round implements Serializable {
 	private List<Feedback> givenFeedback;
 	private State state;
 
-	// aparte methode van maken
-	// Als je een Feedback.correct maakt, hoef je niet met een boolean bij te houden of het woord geraden is
 	public static Round newRound(String wordToGuess) throws IllegalWordException{
 		if( (wordToGuess.trim().length()>0) ){
 			List<Hint> initialHints = new ArrayList<>();

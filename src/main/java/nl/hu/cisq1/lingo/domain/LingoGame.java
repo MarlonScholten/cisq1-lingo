@@ -22,9 +22,12 @@ public class LingoGame implements Serializable {
 	}
 
 	// Starts a new round, adds it to the rounds list and returns it
-	public Round nextRound(String wordToGuess){
+	public void nextRound(String wordToGuess){
 		Round round = Round.newRound(wordToGuess);
 		this.rounds.add(round);
-		return round;
+	}
+
+	public Round getCurrentRound(){
+		return this.rounds.get(rounds.size()-1);
 	}
 }
