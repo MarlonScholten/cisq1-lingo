@@ -19,7 +19,9 @@ public class Round implements Serializable {
 	private List<Feedback> givenFeedback;
 	private State state;
 
-	public static Round newRound(String wordToGuess){
+	// aparte methode van maken
+	// Als je een Feedback.correct maakt, hoef je niet met een boolean bij te houden of het woord geraden is
+	public static Round newRound(String wordToGuess) throws IllegalWordException{
 		if( (wordToGuess.trim().length()>0) ){
 			List<Hint> initialHints = new ArrayList<>();
 			initialHints.add(Hint.initialHintFor(wordToGuess));
@@ -27,7 +29,7 @@ public class Round implements Serializable {
 			round.currentHint = round.givenHints.get(round.givenHints.size()-1);
 			return round;
 		}
-		else throw new IllegalWordException("The word to guess cannot be empty or blank");
+		else throw new IllegalWordException();
 	}
 
 	public void doAttempt(String attempt){
@@ -37,7 +39,7 @@ public class Round implements Serializable {
 			currentHint = Hint.giveHint(currentHint,wordToGuess,feedback.getMarks());
 			this.wordWasGuessed = feedback.isWordGuessed();
 			updateState();
-		} else throw new IllegalMoveException("Cannot attempt a guess when not playing");
+		} else throw new IllegalMoveException();
 	}
 
 	public void updateState(){
