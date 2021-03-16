@@ -1,8 +1,8 @@
 package nl.hu.cisq1.lingo.domain;
 
 import lombok.*;
-import nl.hu.cisq1.lingo.domain.exceptions.IllegalMoveException;
-import nl.hu.cisq1.lingo.domain.exceptions.IllegalWordException;
+import nl.hu.cisq1.lingo.exceptions.IllegalMoveException;
+import nl.hu.cisq1.lingo.exceptions.IllegalWordException;
 
 import java.io.Serializable;
 import java.util.ArrayList;

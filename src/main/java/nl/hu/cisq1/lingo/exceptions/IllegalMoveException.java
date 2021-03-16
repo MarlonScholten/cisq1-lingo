@@ -1,4 +1,4 @@
-package nl.hu.cisq1.lingo.domain.exceptions;
+package nl.hu.cisq1.lingo.exceptions;
 
 public class IllegalMoveException extends RuntimeException{
 	public IllegalMoveException(){

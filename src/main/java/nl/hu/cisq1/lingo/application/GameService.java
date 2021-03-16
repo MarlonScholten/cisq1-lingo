@@ -5,7 +5,8 @@ import nl.hu.cisq1.lingo.data.dto.GameDTOStrategy;
 import nl.hu.cisq1.lingo.data.dto.GameProgressDTO;
 import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
-import nl.hu.cisq1.lingo.domain.exceptions.WordNotFoundException;
+import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;
+import nl.hu.cisq1.lingo.exceptions.WordNotFoundException;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public class GameService {
 		game.nextRound(wordToGuess.getValue());
 		LingoGameDM gameDM = new LingoGameDM(game);
 		gameRepo.save(gameDM);
+		return new GameProgressDTO(gameDM);
+	}
+
+	public GameDTOStrategy getGameById(Long id){
+		LingoGameDM gameDM = this.gameRepo.findById(id)
+				.orElseThrow(() -> new GameNotFoundException());
 		return new GameProgressDTO(gameDM);
 	}
 }

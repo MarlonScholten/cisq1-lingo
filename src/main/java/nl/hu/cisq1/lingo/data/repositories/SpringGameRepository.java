@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SpringGameRepository extends JpaRepository<LingoGameDM, Integer>{
-	Optional<LingoGameDM> findById(Integer id);
+public interface SpringGameRepository extends JpaRepository<LingoGameDM, Long>{
+	Optional<LingoGameDM> findById(Long id);
 }
