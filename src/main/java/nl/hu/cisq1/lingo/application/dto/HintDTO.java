@@ -1,6 +1,5 @@
-package nl.hu.cisq1.lingo.data.dto;
+package nl.hu.cisq1.lingo.application.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import nl.hu.cisq1.lingo.Utils;
 import nl.hu.cisq1.lingo.domain.Hint;

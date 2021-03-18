@@ -1,8 +1,8 @@
 package nl.hu.cisq1.lingo.application;
 
 import nl.hu.cisq1.lingo.data.LingoGameDM;
-import nl.hu.cisq1.lingo.data.dto.GameDTOStrategy;
-import nl.hu.cisq1.lingo.data.dto.GameProgressDTO;
+import nl.hu.cisq1.lingo.application.dto.GameDTOStrategy;
+import nl.hu.cisq1.lingo.application.dto.GameProgressDTO;
 import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;

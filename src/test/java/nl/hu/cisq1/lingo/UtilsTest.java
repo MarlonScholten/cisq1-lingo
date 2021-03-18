@@ -19,7 +19,6 @@ class UtilsTest {
 		assertEquals(expected, Utils.characterListOf(input));
 	}
 
-	// Giving a hint parameters
 	static Stream<Arguments> provideUtilExamples() {
 		// kabel
 		List<Character> kabelChars = new ArrayList<>();
@@ -45,6 +44,30 @@ class UtilsTest {
 				Arguments.of(
 						"breken",
 						brekenChars
+				)
+		);
+	}
+
+	@ParameterizedTest
+	@DisplayName("generate some strings from character lists")
+	@MethodSource("provideCharacterListExamples")
+	void makeStringFromCharacterList(List<Character> input, String expected){
+		assertEquals(expected, Utils.stringOf(input));
+	}
+
+	static Stream<Arguments> provideCharacterListExamples() {
+		return Stream.of(
+				Arguments.of(
+						Utils.characterListOf("kabel"),
+						"kabel"
+				),
+				Arguments.of(
+						Utils.characterListOf("dwerg"),
+						"dwerg"
+				),
+				Arguments.of(
+						Utils.characterListOf("breken"),
+						"breken"
 				)
 		);
 	}

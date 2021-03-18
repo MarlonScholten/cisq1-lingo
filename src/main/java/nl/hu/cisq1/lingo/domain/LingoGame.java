@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.domain;
 
 import lombok.*;
+import nl.hu.cisq1.lingo.exceptions.IllegalMoveException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,8 +24,15 @@ public class LingoGame implements Serializable {
 
 	// Starts a new round, adds it to the rounds list and returns it
 	public void nextRound(String wordToGuess){
-		Round round = Round.newRound(wordToGuess);
-		this.rounds.add(round);
+		if(rounds.size()>0){
+			if(getCurrentRound().getState().equals(State.WON)){
+				Round round = Round.newRound(wordToGuess);
+				this.rounds.add(round);
+			} else throw new IllegalMoveException("cannot start a new round");
+		} else {
+			Round round = Round.newRound(wordToGuess);
+			this.rounds.add(round);
+		}
 	}
 
 	public Round getCurrentRound(){

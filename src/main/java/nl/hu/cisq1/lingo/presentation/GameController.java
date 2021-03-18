@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.presentation;
 
 import nl.hu.cisq1.lingo.application.GameService;
-import nl.hu.cisq1.lingo.data.dto.GameDTOStrategy;
+import nl.hu.cisq1.lingo.application.dto.GameDTOStrategy;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
