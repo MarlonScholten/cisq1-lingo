@@ -6,27 +6,23 @@ import nl.hu.cisq1.lingo.application.dto.GameProgressDTO;
 import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;
-import nl.hu.cisq1.lingo.exceptions.WordNotFoundException;
-import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
-import nl.hu.cisq1.lingo.words.domain.Word;
+import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
 
-
+//TODO: Write tests
 @Service
 public class GameService {
 	private final SpringGameRepository gameRepo;
-	private final SpringWordRepository wordRepo;
+	private final WordService wordService;
 
-	public GameService(SpringGameRepository gameRepo, SpringWordRepository wordRepo) {
+	public GameService(SpringGameRepository gameRepo, WordService wordService) {
 		this.gameRepo = gameRepo;
-		this.wordRepo = wordRepo;
+		this.wordService = wordService;
 	}
 
 	public GameDTOStrategy newGame(){
-		LingoGame game = new LingoGame();
-		Word wordToGuess = this.wordRepo.findRandomWordByLength(LingoGame.getWordLengths().get(0))
-				.orElseThrow(() -> new WordNotFoundException());
-		game.nextRound(wordToGuess.getValue());
+		String wordToGuess = this.wordService.provideRandomWord(LingoGame.getWordLengths().get(0));
+		LingoGame game = new LingoGame(wordToGuess);
 		LingoGameDM gameDM = new LingoGameDM(game);
 		gameRepo.save(gameDM);
 		return new GameProgressDTO(gameDM);
@@ -34,7 +30,7 @@ public class GameService {
 
 	public GameDTOStrategy getGameById(Long id){
 		LingoGameDM gameDM = this.gameRepo.findById(id)
-				.orElseThrow(() -> new GameNotFoundException());
+				.orElseThrow(GameNotFoundException::new);
 		return new GameProgressDTO(gameDM);
 	}
 }

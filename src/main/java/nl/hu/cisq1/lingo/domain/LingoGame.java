@@ -16,23 +16,20 @@ public class LingoGame implements Serializable {
 	private List<Round> rounds;
 	private int score;
 
-	public LingoGame(){
+	public LingoGame(String wordToGuess){
 		this.prevWordLen = wordLengths.get(0);
 		this.rounds = new ArrayList<>();
+		// Always start a new round when making a new game
+		this.rounds.add(Round.newRound(wordToGuess));
 		this.score = 0;
 	}
 
-	// Starts a new round, adds it to the rounds list and returns it
+	// Starts a new round and adds it to the rounds list
 	public void nextRound(String wordToGuess){
-		if(rounds.size()>0){
-			if(getCurrentRound().getState().equals(State.WON)){
-				Round round = Round.newRound(wordToGuess);
-				this.rounds.add(round);
-			} else throw new IllegalMoveException("cannot start a new round");
-		} else {
+		if(getCurrentRound().getState().equals(State.WON)){
 			Round round = Round.newRound(wordToGuess);
 			this.rounds.add(round);
-		}
+		} else throw new IllegalMoveException("cannot start a new round");
 	}
 
 	public Round getCurrentRound(){

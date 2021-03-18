@@ -4,6 +4,7 @@ import nl.hu.cisq1.lingo.application.GameService;
 import nl.hu.cisq1.lingo.application.dto.GameDTOStrategy;
 import org.springframework.web.bind.annotation.*;
 
+//TODO:Write Tests
 @RestController
 @RequestMapping("game")
 public class GameController {
