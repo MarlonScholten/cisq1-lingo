@@ -17,7 +17,7 @@ class LingoGameTest {
 		LingoGame expected = new LingoGame();
 		//this is a bit of a work-around because i don't want an empty constructor
 		List<Round> expectedRounds = new ArrayList<>();
-		expectedRounds.add(Round.newRound("woord"));
+		expectedRounds.add(new Round("woord"));
 		expected.setRounds(expectedRounds);
 
 		assertEquals(expected, new LingoGame());

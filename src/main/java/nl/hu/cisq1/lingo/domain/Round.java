@@ -9,24 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class Round implements Serializable {
 	private String wordToGuess;
 	private static final int MAX_ATTEMPTS = 5;
-	private boolean wordWasGuessed;
-	private List<Hint> givenHints;
+	private boolean wordWasGuessed = false;
+	private final List<Hint> givenHints = new ArrayList<>();
 	private Hint currentHint;
-	private List<Feedback> givenFeedback;
-	private State state;
+	private final List<Feedback> givenFeedback = new ArrayList<>();
+	private State state = State.PLAYING;
 
-	public static Round newRound(String wordToGuess) throws IllegalWordException{
+	public Round(String wordToGuess) throws IllegalWordException{
 		if( (wordToGuess.trim().length()>0) ){
-			List<Hint> initialHints = new ArrayList<>();
-			initialHints.add(Hint.initialHintFor(wordToGuess));
-			Round round = new Round(wordToGuess, false, initialHints, null, new ArrayList<>(), State.PLAYING);
-			round.currentHint = round.givenHints.get(round.givenHints.size()-1);
-			return round;
+			this.wordToGuess = wordToGuess;
+			this.currentHint = Hint.initialHintFor(wordToGuess);
 		}
 		else throw new IllegalWordException();
 	}

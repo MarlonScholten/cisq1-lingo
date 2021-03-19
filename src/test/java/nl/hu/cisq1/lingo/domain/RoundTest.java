@@ -9,8 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,10 +17,12 @@ class RoundTest {
 	@Test
 	@DisplayName("construct a new Round")
 	void constructNewRound(){
-		Round actual = Round.newRound("woord");
-		List<Hint> initialHints = new ArrayList<>();
-		initialHints.add(new Hint(Utils.characterListOf("w....")));
-		Round expected = new Round("woord", false, initialHints,new Hint(Utils.characterListOf("w....")), new ArrayList<>(), State.PLAYING);
+		Round actual = new Round("woord");
+		Round expected = new Round();
+		expected.setWordToGuess("woord");
+		expected.setCurrentHint(new Hint(Utils.characterListOf("w....")));
+		expected.setWordWasGuessed(false);
+		expected.setState(State.PLAYING);
 
 		assertEquals(expected,actual);
 	}
@@ -32,7 +32,7 @@ class RoundTest {
 	void constructNewRoundwithBlankWord(){
 		assertThrows(
 				IllegalWordException.class,
-				() -> Round.newRound("    "));
+				() -> new Round("    "));
 	}
 
 	@Test
@@ -40,14 +40,14 @@ class RoundTest {
 	void constructNewRoundwithEmptyWord(){
 		assertThrows(
 				IllegalWordException.class,
-				() -> Round.newRound(""));
+				() -> new Round(""));
 	}
 
 	@ParameterizedTest
 	@DisplayName("Generate initial hints")
 	@MethodSource("provideInitialHintExamples")
 	void generateInitialHints(String wordToGuess, Hint expectedHint){
-		Round round = Round.newRound(wordToGuess);
+		Round round = new Round(wordToGuess);
 		assertEquals(expectedHint, round.getCurrentHint());
 	}
 
@@ -71,7 +71,7 @@ class RoundTest {
 	@Test
 	@DisplayName("Try an attempt while the round is over")
 	void illegalMoveTest(){
-		Round round = Round.newRound("woord");
+		Round round = new Round("woord");
 		// The game has ended with this guess
 		round.doAttempt("woord");
 		// So this should throw an exception
@@ -84,7 +84,7 @@ class RoundTest {
 	@Test
 	@DisplayName("Do an attempt and win the game")
 	void doAnAttemptAndWin(){
-		Round round = Round.newRound("woord");
+		Round round = new Round("woord");
 		round.doAttempt("woord");
 		assertEquals(State.WON, round.getState());
 	}
@@ -92,7 +92,7 @@ class RoundTest {
 	@Test
 	@DisplayName("Do some attempts and lose the game")
 	void doSomeAttemptsAndLose(){
-		Round round = Round.newRound("woord");
+		Round round = new Round("woord");
 		round.doAttempt("hoort");
 		round.doAttempt("moord");
 		round.doAttempt("vaart");
@@ -104,7 +104,7 @@ class RoundTest {
 	@Test
 	@DisplayName("Do some attempts and win the game on the fifth try")
 	void doSomeAttemptsAndWinOnFifthTry(){
-		Round round = Round.newRound("woord");
+		Round round = new Round("woord");
 		round.doAttempt("hoort");
 		round.doAttempt("moord");
 		round.doAttempt("vaart");
@@ -116,7 +116,7 @@ class RoundTest {
 	@Test
 	@DisplayName("Do an attempt and check if we are still playing")
 	void checkForStillPlayingAfterAttempt(){
-		Round round = Round.newRound("woord");
+		Round round = new Round("woord");
 		round.doAttempt("hoort");
 		round.doAttempt("moord");
 		assertEquals(State.PLAYING, round.getState());

@@ -26,11 +26,11 @@ public class LingoGame implements Serializable {
 	public void nextRound(String wordToGuess){
 		if(this.rounds.size()>0){
 			if(getCurrentRound().getState().equals(State.WON)){
-				Round round = Round.newRound(wordToGuess);
+				Round round = new Round(wordToGuess);
 				this.rounds.add(round);
 			} else throw new IllegalMoveException("cannot start a new round");
 		} else {
-			Round round = Round.newRound(wordToGuess);
+			Round round = new Round(wordToGuess);
 			this.rounds.add(round);
 		}
 	}
