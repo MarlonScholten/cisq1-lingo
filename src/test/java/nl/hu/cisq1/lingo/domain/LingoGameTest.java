@@ -14,19 +14,19 @@ class LingoGameTest {
 	@Test
 	@DisplayName("create a new game")
 	void makeNewGame(){
-		LingoGame expected = new LingoGame("haven");
+		LingoGame expected = new LingoGame();
 		//this is a bit of a work-around because i don't want an empty constructor
 		List<Round> expectedRounds = new ArrayList<>();
 		expectedRounds.add(Round.newRound("woord"));
 		expected.setRounds(expectedRounds);
 
-		assertEquals(expected, new LingoGame("woord"));
+		assertEquals(expected, new LingoGame());
 	}
 
 	@Test
 	@DisplayName("start a new round and immediately try starting another")
 	void startNewRound(){
-		LingoGame game = new LingoGame("woord");
+		LingoGame game = new LingoGame();
 		assertThrows(
 				IllegalMoveException.class,
 				()-> game.nextRound("poort")
@@ -36,7 +36,7 @@ class LingoGameTest {
 	@Test
 	@DisplayName("start a new round, lose the round, and try starting a new round anyway")
 	void startNewRoundWhenLost(){
-		LingoGame game = new LingoGame("woord");
+		LingoGame game = new LingoGame();
 		game.getCurrentRound().doAttempt("hoopt");// 1
 		game.getCurrentRound().doAttempt("loopt");// 2
 		game.getCurrentRound().doAttempt("haven");// 3
@@ -51,7 +51,7 @@ class LingoGameTest {
 	@Test
 	@DisplayName("start a new round, win the round, and start a new round")
 	void startNewRoundWhenWon(){
-		LingoGame game = new LingoGame("woord");
+		LingoGame game = new LingoGame();
 		game.getCurrentRound().doAttempt("hoopt");// 1
 		game.getCurrentRound().doAttempt("loopt");// 2
 		game.getCurrentRound().doAttempt("haven");// 3

@@ -22,7 +22,7 @@ public class GameService {
 
 	public GameDTOStrategy newGame(){
 		String wordToGuess = this.wordService.provideRandomWord(LingoGame.getWordLengths().get(0));
-		LingoGame game = new LingoGame(wordToGuess);
+		LingoGame game = new LingoGame();
 		LingoGameDM gameDM = new LingoGameDM(game);
 		gameRepo.save(gameDM);
 		return new GameProgressDTO(gameDM);
