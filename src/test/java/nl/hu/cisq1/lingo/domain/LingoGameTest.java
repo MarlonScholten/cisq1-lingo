@@ -24,11 +24,11 @@ class LingoGameTest {
 	void startNewRoundWhenLost(){
 		LingoGame game = new LingoGame();
 		game.nextRound("woord");
-		game.getCurrentRound().doAttempt("hoopt");// 1
-		game.getCurrentRound().doAttempt("loopt");// 2
-		game.getCurrentRound().doAttempt("haven");// 3
-		game.getCurrentRound().doAttempt("maken");// 4
-		game.getCurrentRound().doAttempt("taken");// 5 - failed to guess the word
+		game.getCurrentRound().doGuess("hoopt");// 1
+		game.getCurrentRound().doGuess("loopt");// 2
+		game.getCurrentRound().doGuess("haven");// 3
+		game.getCurrentRound().doGuess("maken");// 4
+		game.getCurrentRound().doGuess("taken");// 5 - failed to guess the word
 		assertThrows(
 				IllegalMoveException.class,
 				()-> game.nextRound("poort")
@@ -40,10 +40,10 @@ class LingoGameTest {
 	void startNewRoundWhenWon(){
 		LingoGame game = new LingoGame();
 		game.nextRound("woord");
-		game.getCurrentRound().doAttempt("hoopt");// 1
-		game.getCurrentRound().doAttempt("loopt");// 2
-		game.getCurrentRound().doAttempt("haven");// 3
-		game.getCurrentRound().doAttempt("woord");// 4 - Win the round
+		game.getCurrentRound().doGuess("hoopt");// 1
+		game.getCurrentRound().doGuess("loopt");// 2
+		game.getCurrentRound().doGuess("haven");// 3
+		game.getCurrentRound().doGuess("woord");// 4 - Win the round
 		game.nextRound("haven");// start a new round when we won
 		assertEquals(2, game.getRounds().size());// we should have 2 rounds in our list now, as we are allowed to make a new round
 	}

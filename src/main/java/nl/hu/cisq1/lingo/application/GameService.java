@@ -1,8 +1,6 @@
 package nl.hu.cisq1.lingo.application;
 
 import nl.hu.cisq1.lingo.data.LingoGameDM;
-import nl.hu.cisq1.lingo.application.dto.GameDTOStrategy;
-import nl.hu.cisq1.lingo.application.dto.GameProgressDTO;
 import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;
@@ -20,18 +18,23 @@ public class GameService {
 		this.wordService = wordService;
 	}
 
-	public GameDTOStrategy newGame(){
+	public LingoGameDM newGame(){
 		String wordToGuess = this.wordService.provideRandomWord(LingoGame.getWordLengths().get(0));
 		LingoGame game = new LingoGame();
 		game.nextRound(wordToGuess);
 		LingoGameDM gameDM = new LingoGameDM(game);
-		gameRepo.save(gameDM);
-		return new GameProgressDTO(gameDM);
+		return gameRepo.save(gameDM);
 	}
 
-	public GameDTOStrategy getGameById(Long id){
+	public LingoGameDM doGuess(Long gameId, String attempt){
+		LingoGameDM gameDM = this.getGameById(gameId);
+		gameDM.getLingoGame().getCurrentRound().doGuess(attempt);
+		return gameDM;
+	}
+
+	public LingoGameDM getGameById(Long id){
 		LingoGameDM gameDM = this.gameRepo.findById(id)
 				.orElseThrow(GameNotFoundException::new);
-		return new GameProgressDTO(gameDM);
+		return gameDM;
 	}
 }

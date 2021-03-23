@@ -73,11 +73,11 @@ class RoundTest {
 	void illegalMoveTest(){
 		Round round = new Round("woord");
 		// The game has ended with this guess
-		round.doAttempt("woord");
+		round.doGuess("woord");
 		// So this should throw an exception
 		assertThrows(
 				IllegalMoveException.class,
-				() -> round.doAttempt("woord")
+				() -> round.doGuess("woord")
 		);
 	}
 
@@ -85,7 +85,7 @@ class RoundTest {
 	@DisplayName("Do an attempt and win the game")
 	void doAnAttemptAndWin(){
 		Round round = new Round("woord");
-		round.doAttempt("woord");
+		round.doGuess("woord");
 		assertEquals(State.WON, round.getState());
 	}
 
@@ -93,11 +93,11 @@ class RoundTest {
 	@DisplayName("Do some attempts and lose the game")
 	void doSomeAttemptsAndLose(){
 		Round round = new Round("woord");
-		round.doAttempt("hoort");
-		round.doAttempt("moord");
-		round.doAttempt("vaart");
-		round.doAttempt("baard");
-		round.doAttempt("haard");
+		round.doGuess("hoort");
+		round.doGuess("moord");
+		round.doGuess("vaart");
+		round.doGuess("baard");
+		round.doGuess("haard");
 		assertEquals(State.LOST, round.getState());
 	}
 
@@ -105,11 +105,11 @@ class RoundTest {
 	@DisplayName("Do some attempts and win the game on the fifth try")
 	void doSomeAttemptsAndWinOnFifthTry(){
 		Round round = new Round("woord");
-		round.doAttempt("hoort");
-		round.doAttempt("moord");
-		round.doAttempt("vaart");
-		round.doAttempt("baard");
-		round.doAttempt("woord");
+		round.doGuess("hoort");
+		round.doGuess("moord");
+		round.doGuess("vaart");
+		round.doGuess("baard");
+		round.doGuess("woord");
 		assertEquals(State.WON, round.getState());
 	}
 
@@ -117,8 +117,8 @@ class RoundTest {
 	@DisplayName("Do an attempt and check if we are still playing")
 	void checkForStillPlayingAfterAttempt(){
 		Round round = new Round("woord");
-		round.doAttempt("hoort");
-		round.doAttempt("moord");
+		round.doGuess("hoort");
+		round.doGuess("moord");
 		assertEquals(State.PLAYING, round.getState());
 	}
 }

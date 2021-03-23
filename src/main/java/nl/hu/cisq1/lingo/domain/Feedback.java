@@ -1,9 +1,6 @@
 package nl.hu.cisq1.lingo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import nl.hu.cisq1.lingo.Utils;
 
 import java.io.Serializable;
@@ -13,9 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Data
 public class Feedback implements Serializable {
 	private String attempt;
-	@Getter
 	private List<Mark> marks;
 	private Round round;
 
