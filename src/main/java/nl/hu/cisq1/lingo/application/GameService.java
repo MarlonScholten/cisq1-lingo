@@ -29,7 +29,7 @@ public class GameService {
 	public LingoGameDM doGuess(Long gameId, String attempt){
 		LingoGameDM gameDM = this.getGameById(gameId);
 		gameDM.getLingoGame().getCurrentRound().doGuess(attempt);
-		return gameDM;
+		return gameRepo.save(gameDM);
 	}
 
 	public LingoGameDM getGameById(Long id){

@@ -23,7 +23,6 @@ public class GamePlayingDTO implements GameDTOStrategy{
 		this.roundNumber = game.getRounds().size();
 		this.score = game.getScore();
 		this.hint = Utils.stringOf(game.getCurrentRound().getCurrentHint().getCharacters());
-		//TODO: for some reason word hier niet meerdere feedback in de dto gezet
 		for(Feedback feedback : game.getCurrentRound().getGivenFeedback()){
 			this.feedbacks.add(new FeedbackDTO(feedback));
 		}

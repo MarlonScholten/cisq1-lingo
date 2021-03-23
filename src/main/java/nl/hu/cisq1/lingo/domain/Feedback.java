@@ -14,6 +14,7 @@ import java.util.List;
 public class Feedback implements Serializable {
 	private String attempt;
 	private List<Mark> marks;
+	@ToString.Exclude
 	private Round round;
 
 	public static Feedback newFeedback(String attempt, Round round) {

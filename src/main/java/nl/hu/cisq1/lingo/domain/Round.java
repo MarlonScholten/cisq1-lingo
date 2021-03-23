@@ -29,13 +29,12 @@ public class Round implements Serializable {
 		else throw new IllegalWordException();
 	}
 
-	// TODO bugfix, op een of andere manier word de hint geupdate bij een invalid attempt
 	public void doGuess(String attempt){
 		if(state.equals(State.PLAYING)){
 			Feedback feedback = Feedback.newFeedback(attempt,this);
 			this.givenFeedback.add(feedback);
 			if(feedback.attemptIsValid()){
-				this.currentHint = Hint.giveHint(currentHint,wordToGuess,feedback.getMarks());
+				this.setCurrentHint(Hint.giveHint(currentHint,wordToGuess,feedback.getMarks()));
 			}
 			this.wordWasGuessed = feedback.isWordGuessed();
 			updateState();
