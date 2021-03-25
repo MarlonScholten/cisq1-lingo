@@ -42,21 +42,26 @@ public class LingoGame implements Serializable {
 		try{
 			for(int i=0;i<wordLengths.size();i++){
 				if(prevLen == wordLengths.get(i)){
-					nextLen = wordLengths.get(i++);
+					nextLen = wordLengths.get(i+1);
+					break;
 				}
 			}
 		} catch (IndexOutOfBoundsException exception){
-			return nextLen;
+			return wordLengths.get(0);
 		}
 		return nextLen;
 	}
 
+	// TODO: Tests
 	public void calcAndSetScore(){
+		Integer newScore = 0;
 		for(Round round : this.rounds){
-			this.score += 5 * (5 - round.getGivenFeedback().size()) + 5;
+			newScore += 5 * (5 - round.getGivenFeedback().size()) + 5;
 		}
+		this.score = newScore;
 	}
 
+	// TODO: Tests
 	public Round getCurrentRound(){
 		return this.rounds.get(rounds.size()-1);
 	}

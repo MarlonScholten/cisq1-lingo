@@ -3,6 +3,12 @@ package nl.hu.cisq1.lingo.domain;
 import nl.hu.cisq1.lingo.exceptions.IllegalMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,5 +52,32 @@ class LingoGameTest {
 		game.getCurrentRound().doGuess("woord");// 4 - Win the round
 		game.nextRound("haven");// start a new round when we won
 		assertEquals(2, game.getRounds().size());// we should have 2 rounds in our list now, as we are allowed to make a new round
+	}
+
+	@ParameterizedTest
+	@DisplayName("the next length should increase by one, when reaching 7, go back to 5")
+	@MethodSource("provideLengths")
+	void calculateNextWordLength(String wordToGuess, Integer expectedNextLen){
+		LingoGame game = new LingoGame();
+		game.nextRound(wordToGuess);// start a new round
+		assertEquals(game.calcNextRoundLen(), expectedNextLen);
+	}
+
+	// provide the expected next length of the word
+	static Stream<Arguments> provideLengths() {
+		return Stream.of(
+				Arguments.of(
+						"woord",// 5
+						6
+				),
+				Arguments.of(
+						"gepiep",// 6
+						7
+				),
+				Arguments.of(
+						"dagmenu",// 7
+						5
+				)
+		);
 	}
 }
