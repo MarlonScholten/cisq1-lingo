@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.application;
 import nl.hu.cisq1.lingo.data.LingoGameDM;
 import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
+import nl.hu.cisq1.lingo.domain.State;
 import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,19 @@ public class GameService {
 
 	public LingoGameDM doGuess(Long gameId, String attempt){
 		LingoGameDM gameDM = this.getGameById(gameId);
-		gameDM.getLingoGame().getCurrentRound().doGuess(attempt);
+		LingoGame game = gameDM.getLingoGame();
+		game.getCurrentRound().doGuess(attempt);
+		if(game.getCurrentRound().getState().equals(State.WON)){
+			game.calcAndSetScore();
+		}
+		return gameRepo.save(gameDM);
+	}
+
+	public LingoGameDM nextRound(Long gameId){
+		LingoGameDM gameDM = this.getGameById(gameId);
+		LingoGame game = gameDM.getLingoGame();
+		String wordToGuess = this.wordService.provideRandomWord(game.calcNextRoundLen());
+		game.nextRound(wordToGuess);
 		return gameRepo.save(gameDM);
 	}
 

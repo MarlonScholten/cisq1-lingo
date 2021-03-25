@@ -21,7 +21,7 @@ class RoundTest {
 		Round expected = new Round();
 		expected.setWordToGuess("woord");
 		expected.setCurrentHint(new Hint(Utils.characterListOf("w....")));
-		expected.setWordWasGuessed(false);
+		expected.setWordGuessed(false);
 		expected.setState(State.PLAYING);
 
 		assertEquals(expected,actual);

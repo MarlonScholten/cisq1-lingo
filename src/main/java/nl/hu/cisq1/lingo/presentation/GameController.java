@@ -32,6 +32,14 @@ public class GameController {
 		return new GamePlayingDTO(gameDM);
 	}
 
+	@GetMapping("{gameId}/nextround/")
+	public GameDTOStrategy nextRound(@PathVariable(value="gameId") Long gameId) throws IllegalMoveException {
+		LingoGameDM gameDM = this.service.nextRound(gameId);
+		// TODO: Remove this for production
+		System.out.println("DEBUG: WORDTOGUESS: "+ gameDM.getLingoGame().getCurrentRound().getWordToGuess());
+		return new GamePlayingDTO(gameDM);
+	}
+
 	@GetMapping("/{id}")
 	public GameDTOStrategy getGameById(@PathVariable(value="id") Long id) {
 		LingoGameDM gameDM = this.service.getGameById(id);
