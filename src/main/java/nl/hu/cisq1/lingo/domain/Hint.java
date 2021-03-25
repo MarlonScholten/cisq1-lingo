@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -10,8 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
 public class Hint implements Serializable {
 	private List<Character> characters;
 

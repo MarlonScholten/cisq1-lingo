@@ -1,31 +1,41 @@
 package nl.hu.cisq1.lingo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import nl.hu.cisq1.lingo.exceptions.IllegalMoveException;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
-@Entity
 public class LingoGame implements Serializable {
+	@Getter
+	private final static List<Integer> wordLengths = List.of(5,6,7);
+	private int prevWordLen;
 	private List<Round> rounds;
-	private Long id;
+	private int score;
 
-
-	public void setId(Long id) {
-		this.id = id;
+	public LingoGame(){
+		this.prevWordLen = wordLengths.get(0);
+		this.rounds = new ArrayList<>();
+		this.score = 0;
 	}
 
-	@Id
-	public Long getId() {
-		return id;
+	// Starts a new round and adds it to the rounds list
+	public void nextRound(String wordToGuess){
+		if(this.rounds.size()>0){
+			if(getCurrentRound().getState().equals(State.WON)){
+				Round round = new Round(wordToGuess);
+				this.rounds.add(round);
+			} else throw new IllegalMoveException("cannot start a new round");
+		} else {
+			Round round = new Round(wordToGuess);
+			this.rounds.add(round);
+		}
+	}
+
+	public Round getCurrentRound(){
+		return this.rounds.get(rounds.size()-1);
 	}
 }

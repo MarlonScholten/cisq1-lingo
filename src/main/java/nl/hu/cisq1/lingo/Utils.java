@@ -16,4 +16,14 @@ public final class Utils {
 		}
 		return charList;
 	}
+
+	// Return a String based on a List of Characters
+	public static String stringOf(List<Character> charList){
+		StringBuilder sBuilder = new StringBuilder();
+
+		for(Character c : charList){
+			sBuilder.append(c.toString());
+		}
+		return sBuilder.toString();
+	}
 }

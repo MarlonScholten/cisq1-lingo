@@ -18,8 +18,8 @@ class HintTest {
 	@DisplayName("give a hint")
 	@MethodSource("provideHintExamples")
 	void giveHint(Hint previousHint, String wordToGuess, String attempt, Hint expected){
-		Round round = Round.newRound(wordToGuess);
-		round.doAttempt(attempt);
+		Round round = new Round(wordToGuess);
+		round.doGuess(attempt);
 		List<Mark> marks = round.getLastFeedback().getMarks();
 
 		assertEquals(expected,Hint.giveHint(previousHint,wordToGuess,marks));
