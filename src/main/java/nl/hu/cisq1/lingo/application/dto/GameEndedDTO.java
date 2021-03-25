@@ -11,15 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class GamePlayingDTO implements GameDTOStrategy{
+public class GameEndedDTO implements GameDTOStrategy{
 	private long id;
 	private int roundNumber;
 	private State status;
 	private int score;
 	private String hint;
+	private String message;
 	private List<FeedbackDTO> feedbacks = new ArrayList<>();
 
-	public GamePlayingDTO(LingoGameDM gameDM){
+	public GameEndedDTO(LingoGameDM gameDM){
 		LingoGame game = gameDM.getLingoGame();
 		this.id = gameDM.getId();
 		this.roundNumber = game.getRounds().size();
@@ -29,5 +30,6 @@ public class GamePlayingDTO implements GameDTOStrategy{
 			this.feedbacks.add(new FeedbackDTO(feedback));
 		}
 		this.status = game.getCurrentRound().getState();
+		this.message = "The word to guess was " + game.getCurrentRound().getWordToGuess();
 	}
 }
