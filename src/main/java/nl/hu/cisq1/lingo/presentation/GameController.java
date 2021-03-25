@@ -5,6 +5,7 @@ import nl.hu.cisq1.lingo.application.dto.GameDTOStrategy;
 import nl.hu.cisq1.lingo.application.dto.GamePlayingDTO;
 import nl.hu.cisq1.lingo.application.dto.GameStartedDTO;
 import nl.hu.cisq1.lingo.data.LingoGameDM;
+import nl.hu.cisq1.lingo.exceptions.IllegalMoveException;
 import org.springframework.web.bind.annotation.*;
 
 //TODO:Write Tests
@@ -20,11 +21,13 @@ public class GameController {
 	@PostMapping("/new")
 	public GameDTOStrategy newGame() {
 		LingoGameDM gameDM = this.service.newGame();
+		// TODO: Remove this for production
+		System.out.println("DEBUG: WORDTOGUESS: "+ gameDM.getLingoGame().getCurrentRound().getWordToGuess());
 		return new GameStartedDTO(gameDM);
 	}
 
 	@PostMapping("{gameId}/guess/{attempt}")
-	public GameDTOStrategy doGuess(@PathVariable(value="gameId") Long gameId, @PathVariable(value="attempt") String attempt){
+	public GameDTOStrategy doGuess(@PathVariable(value="gameId") Long gameId, @PathVariable(value="attempt") String attempt) throws IllegalMoveException {
 		LingoGameDM gameDM = this.service.doGuess(gameId, attempt);
 		return new GamePlayingDTO(gameDM);
 	}
