@@ -36,7 +36,7 @@ public class LingoGame implements Serializable {
 		}
 	}
 
-	public Integer calcNextRoundLen(){
+	public Integer calcNextWordLength(){
 		int prevLen = this.getCurrentRound().getWordToGuess().length();
 		int nextLen = 0;
 		try{

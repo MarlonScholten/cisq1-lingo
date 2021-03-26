@@ -40,7 +40,7 @@ public class GameService {
 	public LingoGameDM nextRound(Long gameId){
 		LingoGameDM gameDM = this.getGameById(gameId);
 		LingoGame game = gameDM.getLingoGame();
-		String wordToGuess = this.wordService.provideRandomWord(game.calcNextRoundLen());
+		String wordToGuess = this.wordService.provideRandomWord(game.calcNextWordLength());
 		game.nextRound(wordToGuess);
 		return gameRepo.save(gameDM);
 	}
