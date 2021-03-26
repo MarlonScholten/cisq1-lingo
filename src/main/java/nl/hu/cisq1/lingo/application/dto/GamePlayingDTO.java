@@ -17,7 +17,7 @@ public class GamePlayingDTO implements GameDTOStrategy{
 	private State status;
 	private int score;
 	private String hint;
-	private List<FeedbackDTO> feedbacks = new ArrayList<>();
+	private List<FeedbackDTO> feedbackHistory = new ArrayList<>();
 
 	public GamePlayingDTO(LingoGameDM gameDM){
 		LingoGame game = gameDM.getLingoGame();
@@ -26,7 +26,7 @@ public class GamePlayingDTO implements GameDTOStrategy{
 		this.score = game.getScore();
 		this.hint = Utils.stringOf(game.getCurrentRound().getCurrentHint().getCharacters());
 		for(Feedback feedback : game.getCurrentRound().getGivenFeedback()){
-			this.feedbacks.add(new FeedbackDTO(feedback));
+			this.feedbackHistory.add(new FeedbackDTO(feedback));
 		}
 		this.status = game.getCurrentRound().getState();
 	}

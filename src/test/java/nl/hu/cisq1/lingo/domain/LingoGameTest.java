@@ -59,7 +59,7 @@ class LingoGameTest {
 	void calculateNextWordLength(String wordToGuess, Integer expectedNextLen){
 		LingoGame game = new LingoGame();
 		game.nextRound(wordToGuess);// start a new round
-		assertEquals(game.calcNextWordLength(), expectedNextLen);
+		assertEquals(expectedNextLen, game.calcNextWordLength());
 	}
 
 	// provide the expected next length of the word
@@ -78,5 +78,60 @@ class LingoGameTest {
 						5
 				)
 		);
+	}
+
+	@Test
+	@DisplayName("Guess the word in 1 try, score should be 25")
+	void calculateAndSetScoreGuessOnFirstTry(){
+		LingoGame game = new LingoGame();
+		game.nextRound("woord");
+		game.getCurrentRound().doGuess("woord");// 1 - Win the round
+		assertEquals( 25, game.calcAndSetScore());
+	}
+
+	@Test
+	@DisplayName("Guess the word in 2 tries, score should be 20")
+	void calculateAndSetScoreGuessOnSecondTry(){
+		LingoGame game = new LingoGame();
+		game.nextRound("woord");
+		game.getCurrentRound().doGuess("boort");// 1
+		game.getCurrentRound().doGuess("woord");// 2 - Win the round
+		assertEquals( 20, game.calcAndSetScore());
+	}
+
+	@Test
+	@DisplayName("Guess the word in 3 tries, score should be 15")
+	void calculateAndSetScoreGuessOnThirdTry(){
+		LingoGame game = new LingoGame();
+		game.nextRound("woord");
+		game.getCurrentRound().doGuess("boort");// 1
+		game.getCurrentRound().doGuess("hoort");// 2
+		game.getCurrentRound().doGuess("woord");// 3 - Win the round
+		assertEquals( 15, game.calcAndSetScore());
+	}
+
+	@Test
+	@DisplayName("Guess the word in 4 tries, score should be 10")
+	void calculateAndSetScoreGuessOnFourthTry(){
+		LingoGame game = new LingoGame();
+		game.nextRound("woord");
+		game.getCurrentRound().doGuess("boort");// 1
+		game.getCurrentRound().doGuess("hoort");// 2
+		game.getCurrentRound().doGuess("horen");// 3
+		game.getCurrentRound().doGuess("woord");// 4 - Win the round
+		assertEquals( 10, game.calcAndSetScore());
+	}
+
+	@Test
+	@DisplayName("Guess the word in 5 tries, score should be 5")
+	void calculateAndSetScoreGuessOnFifthTry(){
+		LingoGame game = new LingoGame();
+		game.nextRound("woord");
+		game.getCurrentRound().doGuess("boort");// 1
+		game.getCurrentRound().doGuess("hoort");// 2
+		game.getCurrentRound().doGuess("horen");// 3
+		game.getCurrentRound().doGuess("haven");// 4
+		game.getCurrentRound().doGuess("woord");// 5 - Win the round
+		assertEquals( 5, game.calcAndSetScore());
 	}
 }

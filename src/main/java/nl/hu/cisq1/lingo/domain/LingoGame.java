@@ -53,12 +53,13 @@ public class LingoGame implements Serializable {
 	}
 
 	// TODO: Tests
-	public void calcAndSetScore(){
+	public Integer calcAndSetScore(){
 		Integer newScore = 0;
 		for(Round round : this.rounds){
 			newScore += 5 * (5 - round.getGivenFeedback().size()) + 5;
 		}
 		this.score = newScore;
+		return this.score;
 	}
 
 	// TODO: Tests
