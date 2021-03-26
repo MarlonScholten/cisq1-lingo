@@ -52,7 +52,6 @@ public class LingoGame implements Serializable {
 		return nextLen;
 	}
 
-	// TODO: Tests
 	public Integer calcAndSetScore(){
 		Integer newScore = 0;
 		for(Round round : this.rounds){
