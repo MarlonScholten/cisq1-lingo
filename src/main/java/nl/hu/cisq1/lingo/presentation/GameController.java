@@ -39,7 +39,7 @@ public class GameController {
 		}
 	}
 
-	@GetMapping("{gameId}/nextround/")
+	@GetMapping("{gameId}/round/next")
 	public GameDTOStrategy nextRound(@PathVariable(value="gameId") Long gameId) throws IllegalMoveException {
 		LingoGameDM gameDM = this.service.nextRound(gameId);
 		// TODO: Remove this for production
