@@ -30,7 +30,7 @@ public class GameService {
 	public LingoGameDM doGuess(Long gameId, String attempt){
 		LingoGameDM gameDM = this.getGameById(gameId);
 		LingoGame game = gameDM.getLingoGame();
-		game.getCurrentRound().doGuess(attempt);
+		game.doGuess(attempt);
 		if(game.getCurrentRound().getState().equals(State.WON)){
 			game.calcAndSetScore();
 		}

@@ -1,5 +1,5 @@
 package nl.hu.cisq1.lingo.application.dto;
 
-public interface GameDTOStrategy {
+public interface LingoGameDTOStrategy {
 
 }

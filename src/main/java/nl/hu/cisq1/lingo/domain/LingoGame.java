@@ -61,8 +61,11 @@ public class LingoGame implements Serializable {
 		return this.score;
 	}
 
-	// TODO: Tests
 	public Round getCurrentRound(){
 		return this.rounds.get(rounds.size()-1);
+	}
+
+	public void doGuess(String attempt){
+		this.getCurrentRound().doGuess(attempt);
 	}
 }
