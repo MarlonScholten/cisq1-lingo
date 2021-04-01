@@ -26,6 +26,9 @@ public class GameService {
 		return gameRepo.save(gameDM);
 	}
 
+
+	//TODO: make sure the attempt is a valid word within the database,
+	// otherwise just mark it as invalid
 	public LingoGameDM doGuess(Long gameId, String attempt){
 		LingoGameDM gameDM = this.getGameById(gameId);
 		LingoGame game = gameDM.getLingoGame();
