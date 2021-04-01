@@ -8,7 +8,6 @@ import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
 
-//TODO: Write tests
 @Service
 public class GameService {
 	private final SpringGameRepository gameRepo;

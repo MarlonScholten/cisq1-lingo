@@ -27,14 +27,16 @@ class GameServiceTest {
 		this.gameRepo = mock(SpringGameRepository.class);
 		this.wordService = mock(WordService.class);
 		this.gameService = new GameService(gameRepo,wordService);
+
+		when(wordService.provideRandomWord(5))
+				.thenReturn("woord");
+		when(wordService.provideRandomWord(6))
+				.thenReturn("hebben");
 	}
 
 	@Test
 	@DisplayName("start a new game")
 	void StartNewGame(){
-		when(wordService.provideRandomWord(5))
-				.thenReturn("woord");
-
 		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("woord");
 
@@ -48,9 +50,6 @@ class GameServiceTest {
 	@Test
 	@DisplayName("attempt a guess")
 	void StartNewRound(){
-		when(wordService.provideRandomWord(5))
-				.thenReturn("woord");
-
 		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("woord");
 
@@ -70,11 +69,6 @@ class GameServiceTest {
 	@Test
 	@DisplayName("start a new round when won")
 	void StartNewRoundWhenWon(){
-		when(wordService.provideRandomWord(5))
-				.thenReturn("woord");
-		when(wordService.provideRandomWord(6))
-				.thenReturn("hebben");
-
 		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("woord");
 
