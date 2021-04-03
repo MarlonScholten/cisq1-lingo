@@ -6,7 +6,6 @@ import lombok.ToString;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor

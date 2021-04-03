@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class LingoGame implements Serializable {
 	@Getter
-	private final static List<Integer> wordLengths = List.of(5,6,7);
+	private static final List<Integer> wordLengths = List.of(5,6,7);
 	private int prevWordLen;
 	private List<Round> rounds;
 	private int score;

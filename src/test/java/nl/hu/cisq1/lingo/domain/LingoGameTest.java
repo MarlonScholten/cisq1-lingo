@@ -154,7 +154,7 @@ class LingoGameTest {
 	void doGuessOnCurrentRound(){
 		game.doGuess("hoort");
 
-		assertEquals(game.getCurrentRound().getGivenFeedback().size(), 1);
+		assertEquals(1, game.getCurrentRound().getGivenFeedback().size());
 	}
 
 	@Test
@@ -163,6 +163,6 @@ class LingoGameTest {
 		game.doGuess("hoort");
 		game.doGuess("haven");
 
-		assertEquals(game.getCurrentRound().getGivenFeedback().size(), 2);
+		assertEquals(2, game.getCurrentRound().getGivenFeedback().size());
 	}
 }
