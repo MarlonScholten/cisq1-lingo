@@ -25,7 +25,7 @@ public class LingoGame implements Serializable {
 
 	// Starts a new round and adds it to the rounds list
 	public void nextRound(String wordToGuess){
-		if(this.rounds.isEmpty()){
+		if(this.rounds.size()>0){
 			if(getCurrentRound().getState().equals(State.WON)){
 				Round round = new Round(wordToGuess);
 				this.rounds.add(round);
