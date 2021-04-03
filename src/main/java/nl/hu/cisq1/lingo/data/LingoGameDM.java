@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class LingoGameDM implements Serializable {
+public class LingoGameDM {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
