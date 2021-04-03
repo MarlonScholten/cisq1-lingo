@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo;
 
+import nl.hu.cisq1.lingo.words.application.WordService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +27,19 @@ public final class Utils {
 			sBuilder.append(c.toString());
 		}
 		return sBuilder.toString();
+	}
+
+	// if by some miracle, we get this word
+	// grab another one until it is not this word
+	public static String generateTestGuess(WordService wordService, String wordToGuess){
+		String testWord = "woord";
+		if(wordToGuess.equals(testWord)){
+			String newWord = wordService.provideRandomWord(5);
+			while(newWord.equals(testWord)){
+				newWord = wordService.provideRandomWord(5);
+			}
+			testWord = newWord;
+		}
+		return testWord;
 	}
 }

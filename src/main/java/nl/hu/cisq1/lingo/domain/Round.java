@@ -10,10 +10,11 @@ import java.util.List;
 
 @Data
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class Round implements Serializable {
 	private String wordToGuess;
 	private static final int MAX_ATTEMPTS = 5;
-	private boolean wordWasGuessed = false;
+	private boolean wordGuessed = false;
 	private final List<Hint> givenHints = new ArrayList<>();
 	private Hint currentHint;
 	private final List<Feedback> givenFeedback = new ArrayList<>();
@@ -36,16 +37,16 @@ public class Round implements Serializable {
 			if(feedback.attemptIsValid()){
 				this.setCurrentHint(Hint.giveHint(currentHint,wordToGuess,feedback.getMarks()));
 			}
-			this.wordWasGuessed = feedback.isWordGuessed();
+			this.wordGuessed = feedback.isWordGuessed();
 			updateState();
 		} else throw new IllegalMoveException();
 	}
 
 	public void updateState(){
-		if(wordWasGuessed){
+		if(wordGuessed){
 			state=State.WON;
 		}
-		if(!wordWasGuessed && givenFeedback.size()==MAX_ATTEMPTS) state=State.LOST;
+		if(!wordGuessed && givenFeedback.size()==MAX_ATTEMPTS) state=State.LOST;
 	}
 
 	public Feedback getLastFeedback(){

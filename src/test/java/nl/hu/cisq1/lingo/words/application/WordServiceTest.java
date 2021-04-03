@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.words.application;
 
+import nl.hu.cisq1.lingo.exceptions.WordNotFoundException;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
@@ -60,6 +61,36 @@ class WordServiceTest {
                 Arguments.of(5, "tower"),
                 Arguments.of(6, "castle"),
                 Arguments.of(7, "knights")
+        );
+    }
+
+    @Test
+    @DisplayName("get a specified word that exists")
+    void getWordThatExists(){
+        SpringWordRepository mockRepository = mock(SpringWordRepository.class);
+        String target = "woord";
+        when(mockRepository.findWordByValue(target))
+                .thenReturn(Optional.of(new Word(target)));
+
+        WordService service = new WordService(mockRepository);
+        String result = service.getSpecifiedWord(target);
+
+        assertEquals(target, result);
+    }
+
+    @Test
+    @DisplayName("get a specified word that does not exist")
+    void getWordThatDoesNotExist(){
+        SpringWordRepository mockRepository = mock(SpringWordRepository.class);
+        String target = "woord";
+        when(mockRepository.findWordByValue(target))
+                .thenReturn(Optional.empty());
+
+        WordService service = new WordService(mockRepository);
+
+        assertThrows(
+                WordNotFoundException.class,
+                () -> service.getSpecifiedWord(target)
         );
     }
 }

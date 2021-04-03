@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode
 public class LingoGame implements Serializable {
 	@Getter
 	private final static List<Integer> wordLengths = List.of(5,6,7);
@@ -35,7 +36,36 @@ public class LingoGame implements Serializable {
 		}
 	}
 
+	public Integer calcNextWordLength(){
+		int prevLen = this.getCurrentRound().getWordToGuess().length();
+		int nextLen = 0;
+		try{
+			for(int i=0;i<wordLengths.size();i++){
+				if(prevLen == wordLengths.get(i)){
+					nextLen = wordLengths.get(i+1);
+					break;
+				}
+			}
+		} catch (IndexOutOfBoundsException exception){
+			return wordLengths.get(0);
+		}
+		return nextLen;
+	}
+
+	public Integer calcAndSetScore(){
+		Integer newScore = 0;
+		for(Round round : this.rounds){
+			newScore += 5 * (5 - round.getGivenFeedback().size()) + 5;
+		}
+		this.score = newScore;
+		return this.score;
+	}
+
 	public Round getCurrentRound(){
 		return this.rounds.get(rounds.size()-1);
+	}
+
+	public void doGuess(String attempt){
+		this.getCurrentRound().doGuess(attempt);
 	}
 }
