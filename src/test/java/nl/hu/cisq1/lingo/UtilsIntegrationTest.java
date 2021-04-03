@@ -13,9 +13,6 @@ import org.springframework.context.annotation.Import;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Import(CiTestConfiguration.class)
