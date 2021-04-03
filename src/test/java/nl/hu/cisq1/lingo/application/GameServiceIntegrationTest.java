@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.application;
 
 import nl.hu.cisq1.lingo.CiTestConfiguration;
+import nl.hu.cisq1.lingo.Utils;
 import nl.hu.cisq1.lingo.data.LingoGameDM;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 import nl.hu.cisq1.lingo.domain.State;
@@ -20,20 +21,6 @@ class GameServiceIntegrationTest {
 	private WordService wordService;
 	@Autowired
 	private GameService gameService;
-
-	// if by some miracle, we get this word
-	// grab another one until it is not this word
-	String generateTestGuess(String wordToGuess){
-		String testWord = "woord";
-		if(wordToGuess.equals(testWord)){
-			String newWord = wordService.provideRandomWord(5);
-			while(newWord.equals(testWord)){
-				newWord = wordService.provideRandomWord(5);
-			}
-			testWord = newWord;
-		}
-		return testWord;
-	}
 
 	@Test
 	@DisplayName("start a new game")
@@ -65,7 +52,7 @@ class GameServiceIntegrationTest {
 		LingoGameDM newGameDM = gameService.newGame();
 		LingoGame game = newGameDM.getLingoGame();
 
-		String testWord = generateTestGuess(game.getCurrentRound().getWordToGuess());
+		String testWord = Utils.generateTestGuess(wordService, game.getCurrentRound().getWordToGuess());
 
 		gameService.doGuess(newGameDM.getId(), testWord);
 		gameService.doGuess(newGameDM.getId(), testWord);

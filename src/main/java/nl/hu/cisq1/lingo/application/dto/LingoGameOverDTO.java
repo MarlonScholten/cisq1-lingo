@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class LingoGameEndedDTO implements LingoGameDTOStrategy {
+public class LingoGameOverDTO implements LingoGameDTOStrategy {
 	private long id;
 	private int roundNumber;
 	private State status;
@@ -20,7 +20,7 @@ public class LingoGameEndedDTO implements LingoGameDTOStrategy {
 	private String message;
 	private List<FeedbackDTO> feedbackHistory = new ArrayList<>();
 
-	public LingoGameEndedDTO(LingoGameDM gameDM){
+	public LingoGameOverDTO(LingoGameDM gameDM){
 		LingoGame game = gameDM.getLingoGame();
 		this.id = gameDM.getId();
 		this.roundNumber = game.getRounds().size();

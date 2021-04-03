@@ -5,6 +5,7 @@ import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 import nl.hu.cisq1.lingo.domain.State;
 import nl.hu.cisq1.lingo.exceptions.GameNotFoundException;
+import nl.hu.cisq1.lingo.exceptions.WordNotFoundException;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
 
@@ -26,23 +27,26 @@ public class GameService {
 		return gameRepo.save(gameDM);
 	}
 
-
-	//TODO: make sure the attempt is a valid word within the database,
-	// otherwise just mark it as invalid
 	public LingoGameDM doGuess(Long gameId, String attempt){
-		LingoGameDM gameDM = this.getGameById(gameId);
-		LingoGame game = gameDM.getLingoGame();
-		game.doGuess(attempt);
-		if(game.getCurrentRound().getState().equals(State.WON)){
-			game.calcAndSetScore();
+		if(wordService.wordExists(attempt)){
+			LingoGameDM gameDM = this.getGameById(gameId);
+			LingoGame game = gameDM.getLingoGame();
+			game.doGuess(attempt);
+			if(game.getCurrentRound().getState().equals(State.WON)){
+				game.calcAndSetScore();
+			}
+			return gameRepo.save(gameDM);
+		} else{
+			throw new WordNotFoundException();
 		}
-		return gameRepo.save(gameDM);
 	}
 
 	public LingoGameDM nextRound(Long gameId){
 		LingoGameDM gameDM = this.getGameById(gameId);
 		LingoGame game = gameDM.getLingoGame();
+		System.out.println(game.calcNextWordLength());
 		String wordToGuess = this.wordService.provideRandomWord(game.calcNextWordLength());
+		System.out.println(wordToGuess);
 		game.nextRound(wordToGuess);
 		return gameRepo.save(gameDM);
 	}
