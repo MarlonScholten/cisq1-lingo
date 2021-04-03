@@ -66,7 +66,7 @@ class GameServiceTest {
 
 		assertThrows(
 				WordNotFoundException.class,
-				()-> gameService.doGuess(anyLong(), "aaaaa")
+				()-> gameService.doGuess(1L, "aaaaa")
 		);
 	}
 
@@ -128,7 +128,7 @@ class GameServiceTest {
 
 		assertThrows(
 				IllegalMoveException.class,
-				()-> gameService.nextRound(anyLong())// try to start a new round
+				()-> gameService.nextRound(1L)// try to start a new round
 		);
 	}
 

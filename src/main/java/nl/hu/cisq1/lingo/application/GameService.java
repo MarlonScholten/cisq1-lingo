@@ -50,8 +50,7 @@ public class GameService {
 	}
 
 	public LingoGameDM getGameById(Long id){
-		LingoGameDM gameDM = this.gameRepo.findById(id)
+		return this.gameRepo.findById(id)
 				.orElseThrow(GameNotFoundException::new);
-		return gameDM;
 	}
 }

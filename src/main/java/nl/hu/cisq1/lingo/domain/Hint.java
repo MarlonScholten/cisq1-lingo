@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode
+@ToString
 public class Hint implements Serializable {
 	private List<Character> characters;
 

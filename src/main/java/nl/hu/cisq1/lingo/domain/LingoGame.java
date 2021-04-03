@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class LingoGame implements Serializable {
 	@Getter
-	private final static List<Integer> wordLengths = List.of(5,6,7);
+	private static final List<Integer> wordLengths = List.of(5,6,7);
 	private int prevWordLen;
 	private List<Round> rounds;
 	private int score;
@@ -25,7 +25,7 @@ public class LingoGame implements Serializable {
 
 	// Starts a new round and adds it to the rounds list
 	public void nextRound(String wordToGuess){
-		if(this.rounds.size()>0){
+		if(this.rounds.isEmpty()){
 			if(getCurrentRound().getState().equals(State.WON)){
 				Round round = new Round(wordToGuess);
 				this.rounds.add(round);
