@@ -9,3 +9,14 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=MarlonScholten_cisq1-lingo&metric=security_rating)](https://sonarcloud.io/dashboard?id=MarlonScholten_cisq1-lingo)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=MarlonScholten_cisq1-lingo&metric=sqale_index)](https://sonarcloud.io/dashboard?id=MarlonScholten_cisq1-lingo)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=MarlonScholten_cisq1-lingo&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=MarlonScholten_cisq1-lingo)
+
+# Vulnerability Analysis
+## A9: Using Components with Known Vulnerabilities
+### Description
+Using compononents with knwon Vulnerabilies can lead to to development teams not even understanding which components they use in their application or API, much less keeping them up to date.
+### RiskAssessment of risk. 
+Current risk - LOW
+### Counter-measures
+- Included the OWASP dependency check in the maven build.
+- Added dependabot to this repository
+- Accepted some initial Dependabot pull requests after passing tests.
