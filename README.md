@@ -18,5 +18,5 @@ Using compononents with known vulnerabilities can lead to to development teams n
 Current risk - LOW
 ### Counter-measures
 - Included the OWASP dependency check in the maven build.
-- Added dependabot to this repository
+- Added Dependabot to this repository
 - Accepted some initial Dependabot pull requests after passing tests.
