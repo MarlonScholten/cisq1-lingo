@@ -26,8 +26,6 @@ public class GameController {
 	@PostMapping("/new")
 	public LingoGameDTOStrategy newGame() {
 		LingoGameDM gameDM = this.service.newGame();
-		// TODO: Remove this for production
-		System.out.println("DEBUG: WORDTOGUESS: "+ gameDM.getLingoGame().getCurrentRound().getWordToGuess());
 		return new LingoGamePlayingDTO(gameDM);
 	}
 
@@ -52,8 +50,6 @@ public class GameController {
 	public LingoGameDTOStrategy nextRound(@PathVariable(value="gameId") Long gameId) throws IllegalMoveException {
 		try{
 			LingoGameDM gameDM = this.service.nextRound(gameId);
-			// TODO: Remove this for production
-			System.out.println("DEBUG: WORDTOGUESS: "+ gameDM.getLingoGame().getCurrentRound().getWordToGuess());
 			return new LingoGamePlayingDTO(gameDM);
 		} catch(IllegalMoveException illegalMove){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot start a new round");
