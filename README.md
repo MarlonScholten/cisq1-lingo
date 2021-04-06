@@ -14,7 +14,7 @@
 ## A9: Using Components with Known Vulnerabilities
 ### Description
 Using compononents with known vulnerabilities can lead to to development teams not even understanding which components they use in their application or API, much less keeping them up to date.
-### RiskAssessment of risk. 
+### Assessment of risk. 
 Current risk - LOW
 ### Counter-measures
 - Included the OWASP dependency check in the maven build.
