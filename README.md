@@ -13,7 +13,7 @@
 # Vulnerability Analysis
 ## A9: Using Components with Known Vulnerabilities
 ### Description
-Using compononents with known Vulnerabilies can lead to to development teams not even understanding which components they use in their application or API, much less keeping them up to date.
+Using compononents with known vulnerabilities can lead to to development teams not even understanding which components they use in their application or API, much less keeping them up to date.
 ### RiskAssessment of risk. 
 Current risk - LOW
 ### Counter-measures
