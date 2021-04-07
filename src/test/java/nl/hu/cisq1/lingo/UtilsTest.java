@@ -59,15 +59,15 @@ class UtilsTest {
 		return Stream.of(
 				Arguments.of(
 						Utils.characterListOf("kabel"),
-						"kabel"
+						"kabel"// expected
 				),
 				Arguments.of(
 						Utils.characterListOf("dwerg"),
-						"dwerg"
+						"dwerg"// expected
 				),
 				Arguments.of(
 						Utils.characterListOf("breken"),
-						"breken"
+						"breken"// expected
 				)
 		);
 	}
