@@ -28,5 +28,5 @@ Security misconfiguration can happen at any level of an application stack, inclu
 Current risk - LOW
 ### Counter-measures
 - Included a production profile that does not return a stack trace when an exception is thrown, thus hiding detailed information.
-- Added the Repository to Sonarcloud to scan for vulnerabilities.
+- Added the repository to Sonarcloud to scan for vulnerabilities.
 - A9 Countermeasures
