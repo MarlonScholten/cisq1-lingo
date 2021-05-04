@@ -16,6 +16,8 @@
 Using compononents with known vulnerabilities can lead to to development teams not even understanding which components they use in their application or API, much less keeping them up to date.
 ### Assessment of risk. 
 Current risk - LOW
+
+The project has included the OWASP dependency check as well as dependabot in order to update any vulnerable dependencies it might have.
 ### Counter-measures
 - Included the OWASP dependency check in the maven build.
 - Added Dependabot to this repository
@@ -30,3 +32,13 @@ Current risk - LOW
 - Included a production profile that does not return a stack trace when an exception is thrown, thus hiding detailed information.
 - Added the repository to Sonarcloud to scan for vulnerabilities.
 - A9 Countermeasures
+
+## A4:2017 XML External Entities
+### Description
+XML External Entities (XXE). Many older or poorly configured XML processors evaluate external entity references within XML documents. External entities can be used to disclose internal files using the file URI handler, internal file shares, internal port scanning, remote code execution, and denial of service attacks.
+### Assessment of risk. 
+Current risk - LOW
+
+The project does not support any form of XML Parsing, it only supports JSON input.
+### Counter-measures
+- No consious measures taken, no XML is parsed.
