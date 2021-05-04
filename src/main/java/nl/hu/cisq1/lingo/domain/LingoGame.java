@@ -13,12 +13,10 @@ import java.util.List;
 public class LingoGame implements Serializable {
 	@Getter
 	private static final List<Integer> wordLengths = List.of(5,6,7);
-	private int prevWordLen;
 	private List<Round> rounds;
 	private int score;
 
 	public LingoGame(){
-		this.prevWordLen = wordLengths.get(0);
 		this.rounds = new ArrayList<>();
 		this.score = 0;
 	}
@@ -38,27 +36,14 @@ public class LingoGame implements Serializable {
 
 	public Integer calcNextWordLength(){
 		int prevLen = this.getCurrentRound().getWordToGuess().length();
-		int nextLen = 0;
-		try{
-			for(int i=0;i<wordLengths.size();i++){
-				if(prevLen == wordLengths.get(i)){
-					nextLen = wordLengths.get(i+1);
-					break;
-				}
-			}
-		} catch (IndexOutOfBoundsException exception){
-			return wordLengths.get(0);
+		if(prevLen < wordLengths.get(wordLengths.size()-1)){
+			return wordLengths.get(wordLengths.indexOf(prevLen)+1);
 		}
-		return nextLen;
+		return wordLengths.get(0);
 	}
 
 	public Integer calcAndSetScore(){
-		Integer newScore = 0;
-		for(Round round : this.rounds){
-			newScore += 5 * (5 - round.getGivenFeedback().size()) + 5;
-		}
-		this.score = newScore;
-		return this.score;
+		return this.score += 5 * (5 - getCurrentRound().getGivenFeedback().size()) + 5;
 	}
 
 	public Round getCurrentRound(){

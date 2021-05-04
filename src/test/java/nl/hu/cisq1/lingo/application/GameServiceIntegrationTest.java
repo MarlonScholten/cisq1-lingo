@@ -6,6 +6,7 @@ import nl.hu.cisq1.lingo.data.LingoGameDM;
 import nl.hu.cisq1.lingo.domain.LingoGame;
 import nl.hu.cisq1.lingo.domain.State;
 import nl.hu.cisq1.lingo.words.application.WordService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,18 @@ class GameServiceIntegrationTest {
 	@Autowired
 	private GameService gameService;
 
+	private LingoGameDM newGameDM;
+	private LingoGame game;
+
+	@BeforeEach
+	void init(){
+		newGameDM = gameService.newGame();
+		game = newGameDM.getLingoGame();
+	}
+
 	@Test
 	@DisplayName("start a new game")
 	void startNewGame(){
-		LingoGameDM gameDM = gameService.newGame();
-		LingoGame game = gameDM.getLingoGame();
-
 		assertEquals(State.PLAYING, game.getCurrentRound().getState());
 		assertEquals(5, game.getCurrentRound().getCurrentHint().getCharacters().size());
 		assertEquals(0, game.getCurrentRound().getGivenFeedback().size());
@@ -37,8 +44,7 @@ class GameServiceIntegrationTest {
 	@Test
 	@DisplayName("retrieve a new game by its id")
 	void retrieveById(){
-		LingoGameDM newGameDM = gameService.newGame();
-		LingoGame game = gameService.getGameById(newGameDM.getId()).getLingoGame();
+		game = gameService.getGameById(newGameDM.getId()).getLingoGame();
 
 		assertEquals(State.PLAYING, game.getCurrentRound().getState());
 		assertEquals(5, game.getCurrentRound().getCurrentHint().getCharacters().size());
@@ -49,9 +55,6 @@ class GameServiceIntegrationTest {
 	@Test
 	@DisplayName("do some guesses")
 	void doSomeGuesses(){
-		LingoGameDM newGameDM = gameService.newGame();
-		LingoGame game = newGameDM.getLingoGame();
-
 		String testWord = Utils.generateTestGuess(wordService, game.getCurrentRound().getWordToGuess());
 
 		gameService.doGuess(newGameDM.getId(), testWord);
@@ -70,9 +73,6 @@ class GameServiceIntegrationTest {
 	@Test
 	@DisplayName("win the round in 1 guess")
 	void winTheRound(){
-		LingoGameDM newGameDM = gameService.newGame();
-		LingoGame game = newGameDM.getLingoGame();
-
 		String testWord = game.getCurrentRound().getWordToGuess();
 
 		gameService.doGuess(newGameDM.getId(), testWord);
@@ -89,9 +89,6 @@ class GameServiceIntegrationTest {
 	@Test
 	@DisplayName("win the round and start a new one")
 	void startNewRoundAfterWin(){
-		LingoGameDM newGameDM = gameService.newGame();
-		LingoGame game = newGameDM.getLingoGame();
-
 		String testWord = game.getCurrentRound().getWordToGuess();
 
 		gameService.doGuess(newGameDM.getId(), testWord);
@@ -105,5 +102,4 @@ class GameServiceIntegrationTest {
 		assertEquals(0, game.getCurrentRound().getGivenFeedback().size());
 		assertEquals(25, game.getScore());
 	}
-
 }
