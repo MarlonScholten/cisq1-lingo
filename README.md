@@ -41,4 +41,4 @@ Current risk - LOW
 
 The project does not support any form of XML Parsing, it only supports JSON input.
 ### Counter-measures
-- No consious measures taken, no XML is parsed.
+- No conscious measures taken, no XML is parsed.
