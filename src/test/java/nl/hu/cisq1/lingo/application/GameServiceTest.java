@@ -39,6 +39,7 @@ class GameServiceTest {
 				.thenReturn(true);
 		expectedGame = new LingoGame();
 		gameDM = new LingoGameDM(expectedGame);
+		gameDM.setId(99L);
 	}
 
 	@Test
@@ -78,8 +79,10 @@ class GameServiceTest {
 
 		when(gameRepo.save(any(LingoGameDM.class)))
 				.thenReturn(gameDM);
+
 		when(gameRepo.findById(anyLong()))
 				.thenReturn(Optional.of(gameDM));
+
 
 		gameService.doGuess(anyLong(), "vraag");// 1 guess
 		gameService.doGuess(anyLong(), "vraag");// 2 guesses
