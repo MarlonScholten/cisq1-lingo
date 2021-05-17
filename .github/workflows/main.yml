@@ -24,10 +24,10 @@ jobs:
         run: mvn -B verify -Dspring.profiles.active=ci
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
-          with:
-            path: ~/.sonar/cache
-            key: ${{ runner.os }}-sonar
-            restore-keys: ${{ runner.os }}-sonar
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Analyze with SonarCloud
         if: ${{ github.actor != 'dependabot[bot]' }}
         env:
