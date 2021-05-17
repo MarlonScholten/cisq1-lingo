@@ -30,15 +30,9 @@ public class GameController {
 	}
 
 	@PostMapping("{gameId}/guess/{attempt}")
-	public LingoGameDTOStrategy doGuess(@PathVariable(value="gameId") Long gameId, @PathVariable(value="attempt") String attempt) throws IllegalMoveException, WordNotFoundException {
+	public LingoGameDTOStrategy doGuess(@PathVariable(value="gameId") Long gameId, @PathVariable(value="attempt") String attempt) {
 		try{
-			LingoGameDM gameDM = this.service.doGuess(gameId, attempt);
-			LingoGame game = gameDM.getLingoGame();
-			if(game.getCurrentRound().getState().equals(State.LOST)){
-				return new LingoGameOverDTO(gameDM);
-			} else {
-				return new LingoGamePlayingDTO(gameDM);
-			}
+			return this.service.doGuess(gameId, attempt);
 		} catch(IllegalMoveException illegalMove){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot guess for this round");
 		} catch(WordNotFoundException wordNotFoundException){
@@ -47,7 +41,7 @@ public class GameController {
 	}
 
 	@PostMapping("{gameId}/round/next")
-	public LingoGameDTOStrategy nextRound(@PathVariable(value="gameId") Long gameId) throws IllegalMoveException {
+	public LingoGameDTOStrategy nextRound(@PathVariable(value="gameId") Long gameId) {
 		try{
 			LingoGameDM gameDM = this.service.nextRound(gameId);
 			return new LingoGamePlayingDTO(gameDM);
@@ -57,7 +51,7 @@ public class GameController {
 	}
 
 	@GetMapping("/{id}")
-	public LingoGameDTOStrategy getGameById(@PathVariable(value="id") Long id) throws GameNotFoundException{
+	public LingoGameDTOStrategy getGameById(@PathVariable(value="id") Long id) {
 		try{
 			LingoGameDM gameDM = this.service.getGameById(id);
 			return new LingoGamePlayingDTO(gameDM);

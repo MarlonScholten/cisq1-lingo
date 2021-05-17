@@ -22,6 +22,8 @@ class GameServiceTest {
 	private SpringGameRepository gameRepo;
 	private WordService wordService;
 	private GameService gameService;
+	private LingoGame expectedGame;
+	private LingoGameDM gameDM;
 
 	@BeforeEach
 	void init(){
@@ -35,12 +37,14 @@ class GameServiceTest {
 				.thenReturn("hebben");
 		when(wordService.wordExists(any(String.class)))
 				.thenReturn(true);
+		expectedGame = new LingoGame();
+		gameDM = new LingoGameDM(expectedGame);
+		gameDM.setId(99L);
 	}
 
 	@Test
 	@DisplayName("start a new game")
 	void StartNewGame(){
-		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("dammer");
 
 		LingoGameDM gameDM = new LingoGameDM(expectedGame);
@@ -53,10 +57,8 @@ class GameServiceTest {
 	@Test
 	@DisplayName("guess with an invalid word")
 	void invalidWordGuess(){
-		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("dammer");
 
-		LingoGameDM gameDM = new LingoGameDM(expectedGame);
 		when(gameRepo.save(any(LingoGameDM.class)))
 				.thenReturn(gameDM);
 		when(gameRepo.findById(anyLong()))
@@ -73,14 +75,14 @@ class GameServiceTest {
 	@Test
 	@DisplayName("attempt a guess")
 	void StartNewRound(){
-		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("dammer");
 
-		LingoGameDM gameDM = new LingoGameDM(expectedGame);
 		when(gameRepo.save(any(LingoGameDM.class)))
 				.thenReturn(gameDM);
+
 		when(gameRepo.findById(anyLong()))
 				.thenReturn(Optional.of(gameDM));
+
 
 		gameService.doGuess(anyLong(), "vraag");// 1 guess
 		gameService.doGuess(anyLong(), "vraag");// 2 guesses
@@ -92,10 +94,8 @@ class GameServiceTest {
 	@Test
 	@DisplayName("start a new round when won")
 	void StartNewRoundWhenWon(){
-		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("vraag");
 
-		LingoGameDM gameDM = new LingoGameDM(expectedGame);
 		when(gameRepo.save(any(LingoGameDM.class)))
 				.thenReturn(gameDM);
 		when(gameRepo.findById(anyLong()))
@@ -111,10 +111,8 @@ class GameServiceTest {
 	@Test
 	@DisplayName("cannot start a new round when lost")
 	void StartNewRoundWhenLost(){
-		LingoGame expectedGame = new LingoGame();
 		expectedGame.nextRound("vraag");
 
-		LingoGameDM gameDM = new LingoGameDM(expectedGame);
 		when(gameRepo.save(any(LingoGameDM.class)))
 				.thenReturn(gameDM);
 		when(gameRepo.findById(anyLong()))

@@ -1,5 +1,8 @@
 package nl.hu.cisq1.lingo.application;
 
+import nl.hu.cisq1.lingo.application.dto.LingoGameDTOStrategy;
+import nl.hu.cisq1.lingo.application.dto.LingoGameOverDTO;
+import nl.hu.cisq1.lingo.application.dto.LingoGamePlayingDTO;
 import nl.hu.cisq1.lingo.data.LingoGameDM;
 import nl.hu.cisq1.lingo.data.repositories.SpringGameRepository;
 import nl.hu.cisq1.lingo.domain.LingoGame;
@@ -27,7 +30,7 @@ public class GameService {
 		return gameRepo.save(gameDM);
 	}
 
-	public LingoGameDM doGuess(Long gameId, String attempt){
+	public LingoGameDTOStrategy doGuess(Long gameId, String attempt){
 		if(wordService.wordExists(attempt)){
 			LingoGameDM gameDM = this.getGameById(gameId);
 			LingoGame game = gameDM.getLingoGame();
@@ -35,7 +38,10 @@ public class GameService {
 			if(game.getCurrentRound().getState().equals(State.WON)){
 				game.calcAndSetScore();
 			}
-			return gameRepo.save(gameDM);
+			gameRepo.save(gameDM);
+			return game.getCurrentRound().getState().equals(State.LOST) ?
+					new LingoGameOverDTO(gameDM) :
+					new LingoGamePlayingDTO(gameDM);
 		} else{
 			throw new WordNotFoundException();
 		}
